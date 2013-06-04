@@ -7,6 +7,9 @@
 				<li id="home"><a href="index.jsp">Home</a></li>
 				<li id="projects"><a href="dashboard.jsp">Dashboard</a></li>
 			</ul>
+			<ul class="nav pull-right">
+				<li id="login"><a href="index.jsp">Login</a></li>
+			</ul>
 		</div>
 	</div>
 </div>

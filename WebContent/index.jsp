@@ -1,20 +1,25 @@
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
 	<%@include file="header.jsp"%>
-	<h2
-		style="float: middle; color: #204080; -webkit-text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.6); -moz-text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.6); -o-text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.6); -ms-text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.6); text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.6); padding-top: 130px;">
-		<p
-			style="margin-bottom: 0; color: #E06040; display: inline-block; font-size: 60px;">ALL</p>
-		YOUR PROJECTS
-	</h2>
-	<h1
-		style="margin-right: 84px; float: middle; color: #204080; margin-bottom: 0; line-height: 1; letter-spacing: -1px; -webkit-text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.6); -moz-text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.6); -o-text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.6); -ms-text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.6); text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.6);">
-		IN
-		<p style="color: #E06040; display: inline-block; font-size: 60px;">ONE</p>
-		PLACE
-	</h1>
+	<section id="main">
+		<h2 id="get">
+			GET
+			<p id="started">STARTED!</p>
+		</h2>
+		<section id="sB">
+			<section id="oC">
+				<section class="o">
+					<p class="vA">Sign Up</p>
+				</section>
+				<section class="o">
+					<p class="vA">Login</p>
+				</section>
+			</section>
+		</section>
+	</section>
 	<%@include file="footer.jsp"%>
 </body>
 <script type="text/javascript">
