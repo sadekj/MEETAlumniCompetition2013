@@ -4,11 +4,13 @@ public class User {
 	private int id;
 	private String fName, lName, username, password, img, status;
 
-	public User(int id, String fName, String lName, String password, String img, String status) {
+
+	public User(int id, String fName, String lName, String username, String password, String img, String status) {
 		super();
 		this.id = id;
 		this.fName = fName;
 		this.lName = lName;
+		this.username = username;
 		this.password = password;
 		this.img = img;
 		this.status = status;
