@@ -44,13 +44,23 @@
 		</section>
 	</section>
 	<%@include file="footer.jsp"%>
+	<%
+		}
+	%>
 </body>
 <%
-	}
+	if (session.getAttribute("user") != null) {
 %>
 <script type="text/javascript">
 	//Setting the correct navBar element as active 
 	$(document).ready($('#home').addClass('active'));
+</script>
+<%
+	} else {
+%>
+<script type="text/javascript">
+	//Setting the correct navBar element as active 
+	$(document).ready($('#login').addClass('active'));
 	function cPA() {
 		setTimeout(function() {
 			checkPasses();
@@ -78,4 +88,7 @@
 		}
 	}
 </script>
+<%
+	}
+%>
 </html>
