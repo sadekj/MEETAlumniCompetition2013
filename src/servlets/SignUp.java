@@ -14,7 +14,7 @@ import entities.User;
 /**
  * Servlet implementation class Signup
  */
-@WebServlet("/Signup")
+@WebServlet("/SignUp")
 public class SignUp extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -49,9 +49,14 @@ public class SignUp extends HttpServlet {
 		if (password.length() >= 6) {
 			if (password.equals(repassword)) {
 				User user = new User(0, firstname, lastname, username, password, "", "Pending", email);
-				if (!Database.getInstance().signup(user))
-					error += "Sign up Failed";
-			} else{
+				if (Database.getInstance().isValid(user)) {
+					boolean success = Database.getInstance().signup(user);
+					if (!success)
+						error += "Sign up Failed";
+				}else{
+					error = "Username and/or password is taken.";
+				}
+			} else {
 				error += "Passwords don't match.";
 			}
 		} else {
