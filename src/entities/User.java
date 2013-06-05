@@ -2,10 +2,9 @@ package entities;
 
 public class User {
 	private int id;
-	private String fName, lName, username, password, img, status;
+	private String fName, lName, username, password, img, status, email;
 
-
-	public User(int id, String fName, String lName, String username, String password, String img, String status) {
+	public User(int id, String fName, String lName, String username, String password, String img, String status, String email) {
 		super();
 		this.id = id;
 		this.fName = fName;
@@ -14,10 +13,19 @@ public class User {
 		this.password = password;
 		this.img = img;
 		this.status = status;
+		this.email = email;
 	}
 
 	public User() {
+		
+	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public int getId() {
@@ -75,6 +83,7 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

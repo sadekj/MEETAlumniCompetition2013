@@ -2,43 +2,62 @@ package entities;
 
 public class Round {
 	private int id;
-	private String name, description;
+	private String title, description, status;
+
 	public Round() {
-		
+
 	}
-	public Round(int id, String name, String description) {
+
+	public Round(int id, String title, String description, String status) {
 		super();
 		this.id = id;
-		this.name = name;
+		this.title = title;
 		this.description = description;
+		this.status = status;
 	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
+
+	public String getTitle() {
+		return title;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + id;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -55,13 +74,12 @@ public class Round {
 			return false;
 		if (id != other.id)
 			return false;
-		if (name == null) {
-			if (other.name != null)
+		if (title == null) {
+			if (other.title != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!title.equals(other.title))
 			return false;
 		return true;
 	}
-	
 
 }
