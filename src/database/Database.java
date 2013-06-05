@@ -57,7 +57,7 @@ public class Database {
 	 *         false
 	 */
 	public boolean signup(User user) {
-		String query = "INSERT INTO user(`fname`,`lname`,`username`,`password`,`img`,`status`)VALUES(?,?,?,?,?,?)";
+		String query = "INSERT INTO user(`fname`,`lname`,`username`,`password`,`img`,`status`,`email`)VALUES(?,?,?,?,?,?,?)";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
@@ -67,11 +67,28 @@ public class Database {
 			ps.setString(4, user.getPassword());
 			ps.setString(5, user.getImg());
 			ps.setString(6, "Pending");
-			return ps.execute();
+			ps.setString(7, user.getEmail());
+			ps.execute();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	public boolean isValid(User user) {
+		String query = "SELECT * FROM user WHERE `username`=? OR `email`=?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, user.getUsername());
+			ps.setString(2, user.getEmail());
+			ResultSet rs = ps.executeQuery();
+			if (rs.next())
+				return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
 	}
 
 	public User signIn(String username, String password) {
