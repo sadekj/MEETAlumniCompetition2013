@@ -47,33 +47,94 @@
 	height: 25%;
 }
 
-.o {
+.o,.vA {
 	display: table-cell;
 	height: 75px;
 	width: 187px;
 	vertical-align: middle;
+	-webkit-transition: all 800ms ease;
+	-moz-transition: all 800ms ease;
+	-o-transition: all 800ms ease;
+	-ms-transition: all 800ms ease;
+	transition: all 800ms ease;
+	text-decoration: none;
+}
+
+.o:hover .vA {
+	color: rgba(77, 100, 255, 1);
+	text-shadow: 1px 1px rgba(255, 255, 255, 0.1);
+	text-decoration: none;
+}
+
+#oC {
+	background-color: #204080;
+	min-height: 75px;
+	max-height: 75px;
+	-webkit-border-radius: 4px 4px 0 0;
+	-moz-border-radius: 4px 4px 0 0;
+	-o-border-radius: 4px 4px 0 0;
+	-ms-border-radius: 4px 4px 0 0;
+	border-radius: 4px 4px 0 0;
+	-webkit-box-shadow: inset 0px 0px 12px 2px rgba(200, 200, 200, 0.4);
+	-moz-box-shadow: inset 0px 0px 12px 2px rgba(200, 200, 200, 0.4);
+	-o-box-shadow: inset 0px 0px 12px 2px rgba(200, 200, 200, 0.4);
+	-ms-box-shadow: inset 0px 0px 12px 2px rgba(200, 200, 200, 0.4);
+	box-shadow: inset 0px 0px 12px 2px rgba(200, 200, 200, 0.4);
+}
+
+#oL {
+	-webkit-border-radius: 4px 0 0 0;
+	-moz-border-radius: 4px 0 0 0;
+	-o-border-radius: 4px 0 0 0;
+	-ms-border-radius: 4px 0 0 0;
+	border-radius: 4px 0 0 0;
+}
+
+#oR {
+	-webkit-border-radius: 0 4px 0 0;
+	-moz-border-radius: 0 4px 0 0;
+	-o-border-radius: 0 4px 0 0;
+	-ms-border-radius: 0 4px 0 0;
+	border-radius: 0 4px 0 0;
 }
 
 .vA {
 	color: white;
 	font-size: 40px;
 	text-align: center;
+	text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.6);
 }
 
-#lFC {
-	height: 300px;
+.f {
+	width: 206px;
+	margin: 10px auto 0 auto;
+}
+
+.f .hFO {
+	color: red;
+	border: 1px solid;
+	-webkit-box-shadow: 0px 0px 4px 2px rgba(255, 0, 0, 0.4);
+	-moz-box-shadow: 0px 0px 4px 2px rgba(255, 0, 0, 0.4);
+	-o-box-shadow: 0px 0px 4px 2px rgba(255, 0, 0, 0.4);
+	-ms-box-shadow: 0px 0px 4px 2px rgba(255, 0, 0, 0.4);
+	box-shadow: 0px 0px 4px 2px rgba(255, 0, 0, 0.4);
+}
+
+.f .hFO:focus {
+	color: red;
+	border: 1px solid;
+	-webkit-box-shadow: 0px 0px 8px 2px rgba(255, 0, 0, 0.8);
+	-moz-box-shadow: 0px 0px 8px 2px rgba(255, 0, 0, 0.8);
+	-o-box-shadow: 0px 0px 8px 2px rgba(255, 0, 0, 0.8);
+	-ms-box-shadow: 0px 0px 8px 2px rgba(255, 0, 0, 0.8);
+	box-shadow: 0px 0px 8px 2px rgba(255, 0, 0, 0.8);
 }
 
 .fE {
 	verical-align: middle;
 }
 
-#lF {
-	width: 206px;
-	margin: 10px auto 0 auto;
-}
-
-#submit {
+#submit,#lSubmit {
 	width: 206px;
 	height: 25px;
 	padding: 0;
@@ -96,6 +157,14 @@
 	-o-box-shadow: inset 0px 0px 12px 2px rgba(200, 200, 200, 0.4);
 	-ms-box-shadow: inset 0px 0px 12px 2px rgba(200, 200, 200, 0.4);
 	box-shadow: inset 0px 0px 12px 2px rgba(200, 200, 200, 0.4);
+	-webkit-transition: all 800ms ease;
+	-moz-transition: all 800ms ease;
+	-o-transition: all 800ms ease;
+	-ms-transition: all 800ms ease;
+	transition: all 800ms ease;
+}
+
+#signUp,#signIn {
 	-webkit-transition: all 800ms ease;
 	-moz-transition: all 800ms ease;
 	-o-transition: all 800ms ease;
