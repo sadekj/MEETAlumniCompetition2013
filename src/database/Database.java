@@ -75,6 +75,7 @@ public class Database {
 		}
 		return false;
 	}
+
 	public boolean isValid(User user) {
 		String query = "SELECT * FROM user WHERE `username`=? OR `email`=?";
 		PreparedStatement ps;
@@ -246,7 +247,7 @@ public class Database {
 		try {
 			ps = connection.prepareStatement(query);
 			ps.setInt(1, team.getId());
-			ps.setInt(1, round.getId());
+			ps.setInt(2, round.getId());
 			ResultSet rs = ps.executeQuery();
 			while (rs.next())
 				scores.add(new Score(rs.getInt("id"), rs.getDouble("value"), rs.getString("description"), getUser(rs.getInt("userid"))));
@@ -308,6 +309,23 @@ public class Database {
 		return team;
 	}
 
+	public Round getRound(int id) {
+		String query = "SELECT * FROM `round` WHERE `id`=?";
+		PreparedStatement ps;
+		Round round = null;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				round = new Round(rs.getInt("id"), rs.getString("title"), rs.getString("description"), rs.getString("status"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return round;
+	}
+
 	public Group getGroup(int id) {
 		String query = "SELECT * FROM `group` WHERE `id`=?";
 		PreparedStatement ps;
@@ -348,7 +366,7 @@ public class Database {
 			ps = connection.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next())
-				rounds.add(new Round(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getString("status")));
+				rounds.add(new Round(rs.getInt("id"), rs.getString("title"), rs.getString("description"), rs.getString("status")));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -435,19 +453,22 @@ public class Database {
 		return users;
 	}
 
-	// public static void main(String[] args) {
-	// User user = new User(1, "firstname", "lastname", "username",
-	// "password", "img url", "Approved", "email");
-	// Team team = new Team(1, "name", "description");
-	// Group group = new Group(1, "name", "description");
-	// Database.getInstance().signup(user);
-	// Database.getInstance().approveUser(user);
-	// System.out.println(Database.getInstance().signIn("username",
-	// "password").getfName());
-	// Database.getInstance().createGroup(group);
-	// Database.getInstance().addUserToGroup(user, group);
-	// Database.getInstance().addUserToTeam(user, team);
-	// System.out.println(Database.getInstance().isInGroup(user, group));
-	// System.out.println(Database.getInstance().isInTeam(user, team));
-	// }
+	public static void main(String[] args) {
+		User user = new User(1, "firstname", "lastname", "username", "password", "img url", "Approved", "email");
+		Team team = new Team(1, "name", "description");
+		Round round = new Round(2, "Roundtitle", "RoundDescription", "Closed");
+		Score score = new Score(1, 70.7, "description", user);
+		// Group group = new Group(1, "name", "description");
+		// Database.getInstance().signup(user);
+		// Database.getInstance().approveUser(user);
+		// System.out.println(Database.getInstance().signIn("username",
+		// "password").getfName());
+		// Database.getInstance().createGroup(group);
+		// Database.getInstance().addUserToGroup(user, group);
+		// Database.getInstance().addUserToTeam(user, team);
+		// System.out.println(Database.getInstance().isInGroup(user, group));
+		// System.out.println(Database.getInstance().isInTeam(user, team));
+//		Database.getInstance().createRound(round);
+		Database.getInstance().addScore(score, user, team, round);
+	}
 }

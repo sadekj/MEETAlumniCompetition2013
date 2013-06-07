@@ -1,9 +1,10 @@
 <html>
 <head>
+<%@include file="head.jsp"%>
+<link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
 	<%@include file="header.jsp"%>
-	<link rel="stylesheet" type="text/css" href="css/index.css">
 	<%
 		if (session.getAttribute("user") != null) {
 	%>
