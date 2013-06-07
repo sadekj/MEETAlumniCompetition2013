@@ -22,6 +22,7 @@ caption { font-size: 1.5em;  }
 .visualize ul.visualize-key .visualize-key-color { width: 10px; height: 10px;  margin-top: -4px; }
 .visualize ul.visualize-key .visualize-key-label { color: #fff;  }
 .visualize .label { color: #fff;  background: none;}
+.enhanced_toggleResult{display: none;}
 
 
 

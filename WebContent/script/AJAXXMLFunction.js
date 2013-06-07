@@ -24,7 +24,7 @@ function getXMLHttpRequest() {
 		throw new Error("Cannot create an XMLHttpRequest");
 	}
 }
-function loadScores() {
+function loadScores(first) {
 	xhrequest = null;
 	try {
 		xhrequest = getXMLHttpRequest();
@@ -36,8 +36,11 @@ function loadScores() {
 		xhrequest.onreadystatechange = updateScores;
 		xhrequest.open("GET", strURL, true);
 		xhrequest.send(null);
-//		$('.visualize').trigger('visualizeRefresh');
-//		setTimeout("loadScores()", 1000);
+		// $('.visualize').trigger('visualizeRefresh');
+		if (first==1)
+			loadChart();
+		setTimeout("updateChart()", 2000);
+		setTimeout("loadScores(2)", 2000);
 	}
 }
 function updateScores() {
@@ -45,4 +48,19 @@ function updateScores() {
 		var strResponse = xhrequest.responseText;
 		document.getElementById("allscores").innerHTML = strResponse;
 	}
+}
+function updateChart() {
+	$('.visualize').trigger('visualizeRefresh');
+	document.getElementById("chart").innerHTML = "";
+	$('table').visualize().appendTo('p').trigger('visualizeRefresh');
+}
+function loadChart() {
+	enhance({
+		loadScripts : [ {
+			src : 'jQuery-Visualize/js/excanvas.js',
+			iecondition : 'all'
+		}, 'jQuery-Visualize/js/visualize.jQuery.js', 'script/visualize.js', ],
+		loadStyles : [ 'jQuery-Visualize/css/visualize.css',
+				'css/visualize-dark.css' ]
+	});
 }

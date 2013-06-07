@@ -64,7 +64,7 @@ public class AllScores extends HttpServlet {
 		} catch (NumberFormatException e) {
 			response.sendRedirect("AllScores");
 		}
-		response.getOutputStream().println("<table>");
+		response.getOutputStream().println("<table id='scoresTable'>");
 		response.getOutputStream().println("<caption>Allscores</caption>");
 		response.getOutputStream().println("<thead>");
 		response.getOutputStream().println("<tr>");

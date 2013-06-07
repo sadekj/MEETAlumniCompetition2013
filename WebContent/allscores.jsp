@@ -11,16 +11,7 @@
 	src="http://filamentgroup.github.com/EnhanceJS/enhance.js"></script>
 <script type="text/javascript">
 	$(function() {
-		loadScores();
-		enhance({
-			loadScripts : [ {
-				src : 'jQuery-Visualize/js/excanvas.js',
-				iecondition : 'all'
-			}, 'jQuery-Visualize/js/visualize.jQuery.js',
-					'script/visualize.js', ],
-			loadStyles : [ 'jQuery-Visualize/css/visualize.css',
-					'css/visualize-dark.css' ]
-		});
+		loadScores(1);
 	});
 </script>
 <script type="text/javascript">
@@ -31,8 +22,8 @@
 <body>
 	<%@include file="header.jsp"%>
 	<div class="container">
-	<div id="allscores"></div>
-
+		<div id="allscores" onclick="updateChart()"></div>
+		<p id="chart"></p>
 
 
 
