@@ -37,7 +37,7 @@ function loadScores() {
 		xhrequest.open("GET", strURL, true);
 		xhrequest.send(null);
 //		$('.visualize').trigger('visualizeRefresh');
-//		setTimeout("loadScores()", 500);
+//		setTimeout("loadScores()", 1000);
 	}
 }
 function updateScores() {

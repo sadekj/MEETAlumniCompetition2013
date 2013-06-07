@@ -12,28 +12,31 @@
 <script type="text/javascript">
 	$(function() {
 		loadScores();
+		enhance({
+			loadScripts : [ {
+				src : 'jQuery-Visualize/js/excanvas.js',
+				iecondition : 'all'
+			}, 'jQuery-Visualize/js/visualize.jQuery.js',
+					'script/visualize.js', ],
+			loadStyles : [ 'jQuery-Visualize/css/visualize.css',
+					'css/visualize-dark.css' ]
+		});
 	});
 </script>
 <script type="text/javascript">
 	// Run capabilities test
-	enhance({
-		loadScripts : [ {
-			src : 'jQuery-Visualize/js/excanvas.js',
-			iecondition : 'all'
-		}, 'jQuery-Visualize/js/visualize.jQuery.js', 'script/visualize.js', ],
-		loadStyles : [ 'jQuery-Visualize/css/visualize.css',
-				'jQuery-Visualize/css/visualize-dark.css' ]
-	});
 </script>
 <title>Insert title here</title>
 </head>
 <body>
 	<%@include file="header.jsp"%>
+	<div class="container">
 	<div id="allscores"></div>
 
 
 
 
+	</div>
 	<%@include file="footer.jsp"%>
 </body>
 </html>
