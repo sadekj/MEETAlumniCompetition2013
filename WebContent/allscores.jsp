@@ -14,10 +14,7 @@
 		loadScores(1);
 	});
 </script>
-<script type="text/javascript">
-	// Run capabilities test
-</script>
-<title>Insert title here</title>
+<title>Dashboard</title>
 </head>
 <body>
 	<%@include file="header.jsp"%>
