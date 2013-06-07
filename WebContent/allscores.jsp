@@ -16,7 +16,7 @@
 </script>
 <title>Dashboard</title>
 </head>
-<body>
+<body onmousemove="loadScores(2)">
 	<%@include file="header.jsp"%>
 	<div class="container">
 		<div id="allscores" onclick="updateChart()"></div>

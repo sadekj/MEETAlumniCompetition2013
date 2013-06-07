@@ -40,7 +40,7 @@ function loadScores(first) {
 		if (first==1)
 			loadChart();
 		setTimeout("updateChart()", 2000);
-		setTimeout("loadScores(2)", 2000);
+//		setTimeout("loadScores(2)", 2000);
 	}
 }
 function updateScores() {
