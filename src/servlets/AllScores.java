@@ -47,6 +47,7 @@ public class AllScores extends HttpServlet {
 		ArrayList<Round> rounds = new ArrayList<Round>();
 		ArrayList<Team> teams = new ArrayList<Team>();
 		double total = 0;
+		double teamTotal=0;
 		int id = 0;
 		try {
 			if (teamid == null || teamid.equals("")) {
@@ -64,13 +65,14 @@ public class AllScores extends HttpServlet {
 		} catch (NumberFormatException e) {
 			response.sendRedirect("AllScores");
 		}
-		response.getOutputStream().println("<table id='scoresTable'>");
+		response.getOutputStream().println("<table id='myTable' class='tablesorter'>");
 		response.getOutputStream().println("<caption>Allscores</caption>");
 		response.getOutputStream().println("<thead>");
 		response.getOutputStream().println("<tr>");
 		response.getOutputStream().println("<td>Team/Round</td>");
 		for (Round currentRound : rounds)
 			response.getOutputStream().println("<th scope='col'>" + currentRound.getTitle() + "</th>");
+		response.getOutputStream().println("<th scope='col'>Total</th>");
 		response.getOutputStream().println("</tr>");
 		response.getOutputStream().println("</thead>");
 		response.getOutputStream().println("<tbody>");
@@ -81,9 +83,12 @@ public class AllScores extends HttpServlet {
 				ArrayList<Score> scores = Database.getInstance().getScoresPerTeamAndRound(currentTeam, currentRound);
 				for (Score currentScore : scores)
 					total += currentScore.getValue();
-				response.getOutputStream().println("<td>" + (int)total + "</td>");
+				teamTotal+=total;
+				response.getOutputStream().println("<td>" + total + "</td>");
 				total = 0.0;
 			}
+			response.getOutputStream().println("<td>" + teamTotal + "</td>");
+			teamTotal=0;
 			response.getOutputStream().println("</tr>");
 		}
 		response.getOutputStream().println("</tbody>");
