@@ -36,10 +36,9 @@ function loadScores(first) {
 		xhrequest.onreadystatechange = updateScores;
 		xhrequest.open("GET", strURL, true);
 		xhrequest.send(null);
-		// $('.visualize').trigger('visualizeRefresh');
+		 $('.visualize').trigger('visualizeRefresh');
 		if (first==1)
 			loadChart();
-		setTimeout("updateChart()", 2000);
 //		setTimeout("loadScores(2)", 2000);
 	}
 }
@@ -47,6 +46,7 @@ function updateScores() {
 	if (xhrequest.readyState == 4 && xhrequest.status == 200) {
 		var strResponse = xhrequest.responseText;
 		document.getElementById("allscores").innerHTML = strResponse;
+		setTimeout("updateChart()", 2000);
 	}
 }
 function updateChart() {
@@ -57,10 +57,10 @@ function updateChart() {
 function loadChart() {
 	enhance({
 		loadScripts : [ {
-			src : 'jQuery-Visualize/js/excanvas.js',
+			src : 'script/jQuery-Visualize/js/excanvas.js',
 			iecondition : 'all'
-		}, 'jQuery-Visualize/js/visualize.jQuery.js', 'script/visualize.js', ],
-		loadStyles : [ 'jQuery-Visualize/css/visualize.css',
+		}, 'script/visualize.jQuery.js', 'script/visualize.js', ],
+		loadStyles : [ 'css/visualize.css',
 				'css/visualize-dark.css' ]
 	});
 }

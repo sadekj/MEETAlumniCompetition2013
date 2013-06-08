@@ -25,6 +25,9 @@ public class Database {
 
 	private Connection createConnection() {
 		if (connection == null) {
+//			String url = "jdbc:mysql://127.13.81.130:3306/MEETAlumniCompetition2013";
+//			String username = "adminUjVsItP";
+//			String password = "qxCxPNB43QKx";
 			String url = "jdbc:mysql://localhost/MEETAlumniCompetition2013";
 			String username = "root";
 			String password = "";
@@ -469,6 +472,7 @@ public class Database {
 		// System.out.println(Database.getInstance().isInGroup(user, group));
 		// System.out.println(Database.getInstance().isInTeam(user, team));
 //		Database.getInstance().createRound(round);
-		Database.getInstance().addScore(score, user, team, round);
+//		Database.getInstance().addScore(score, user, team, round);
+		System.out.println(Database.getInstance().getScore(1).getValue());
 	}
 }
