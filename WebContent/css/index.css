@@ -36,34 +36,51 @@
 	-o-box-shadow: inset 0px 0px 12px 2px rgba(200, 200, 200, 0.4);
 	-ms-box-shadow: inset 0px 0px 12px 2px rgba(200, 200, 200, 0.4);
 	box-shadow: inset 0px 0px 12px 2px rgba(200, 200, 200, 0.4);
-	-webkit-transition: all 800ms ease;
-	-moz-transition: all 800ms ease;
-	-o-transition: all 800ms ease;
-	-ms-transition: all 800ms ease;
-	transition: all 800ms ease;
+	-webkit-transition: all 600ms ease;
+	-moz-transition: all 600ms ease;
+	-o-transition: all 600ms ease;
+	-ms-transition: all 600ms ease;
+	transition: all 600ms ease;
 }
 
 #oC {
 	height: 25%;
 }
 
-.o,.vA {
+.o,.vA,.un {
 	display: table-cell;
 	height: 75px;
 	width: 187px;
 	vertical-align: middle;
-	-webkit-transition: all 800ms ease;
-	-moz-transition: all 800ms ease;
-	-o-transition: all 800ms ease;
-	-ms-transition: all 800ms ease;
-	transition: all 800ms ease;
+	-webkit-transition: all 600ms ease;
+	-moz-transition: all 600ms ease;
+	-o-transition: all 600ms ease;
+	-ms-transition: all 600ms ease;
+	transition: all 600ms ease;
 	text-decoration: none;
+	text-shadow: 1px 1px rgba(0, 0, 0, 0.6);
 }
 
-.o:hover .vA {
-	color: rgba(77, 100, 255, 1);
-	text-shadow: 1px 1px rgba(255, 255, 255, 0.1);
+.vA {
+	color: white;
+	font-size: 40px;
+	text-align: center;
+	text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.6);
+}
+
+.vA:hover {
 	text-decoration: none;
+	color: rgb(255, 255, 255);
+}
+
+.un {
+	color: rgb(180, 180, 180);
+}
+
+.un:hover {
+	text-decoration: none;
+	color: rgb(255, 255, 255);
+	background-color: rgba(64, 128, 255, 0.4);
 }
 
 #oC {
@@ -82,7 +99,7 @@
 	box-shadow: inset 0px 0px 12px 2px rgba(200, 200, 200, 0.4);
 }
 
-#oL {
+#oL,#vA1 {
 	-webkit-border-radius: 4px 0 0 0;
 	-moz-border-radius: 4px 0 0 0;
 	-o-border-radius: 4px 0 0 0;
@@ -90,7 +107,7 @@
 	border-radius: 4px 0 0 0;
 }
 
-#oR {
+#oR,#vA2 {
 	-webkit-border-radius: 0 4px 0 0;
 	-moz-border-radius: 0 4px 0 0;
 	-o-border-radius: 0 4px 0 0;
@@ -98,11 +115,8 @@
 	border-radius: 0 4px 0 0;
 }
 
-.vA {
-	color: white;
-	font-size: 40px;
-	text-align: center;
-	text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.6);
+#oR:hover,#oL:hover {
+	background-color: rgba(32, 64, 200, 0.6);
 }
 
 .f {
@@ -157,14 +171,9 @@
 	-o-box-shadow: inset 0px 0px 12px 2px rgba(200, 200, 200, 0.4);
 	-ms-box-shadow: inset 0px 0px 12px 2px rgba(200, 200, 200, 0.4);
 	box-shadow: inset 0px 0px 12px 2px rgba(200, 200, 200, 0.4);
-	-webkit-transition: all 800ms ease;
-	-moz-transition: all 800ms ease;
-	-o-transition: all 800ms ease;
-	-ms-transition: all 800ms ease;
-	transition: all 800ms ease;
 }
 
-#signUp,#signIn {
+#signUp,#signIn,#alert {
 	-webkit-transition: all 800ms ease;
 	-moz-transition: all 800ms ease;
 	-o-transition: all 800ms ease;
