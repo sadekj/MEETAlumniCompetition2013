@@ -23,10 +23,11 @@ function scroll(y) {
 		$('#vA2').removeClass("un");
 		$("#signUp").css("display", "none");
 		$("#alert").css("display", "none");
+		$("#sB").css("height", "180px");
 		setTimeout(function() {
 			sIT();
 			$("#signIn").css("display", "block");
-		}, 100);
+		}, 200);
 		$("#sB").css("height", "180px");
 	}
 }
@@ -34,7 +35,7 @@ function scroll(y) {
 function sIT() {
 	setTimeout(function() {
 		checkSignIn();
-	}, 100);
+	}, 180);
 }
 
 function checkSignIn() {
@@ -74,7 +75,7 @@ function checkSignIn() {
 function cPA() {
 	setTimeout(function() {
 		checkSignUp();
-	}, 100);
+	}, 180);
 }
 function checkSignUp() {
 	if ($("#fNa").val() != ""
