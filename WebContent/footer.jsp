@@ -1,4 +1,4 @@
-<div id="footerPadding" style="height: 42px;"></div>
+<div id="footerPadding" style="height: 84px;"></div>
 <div class="navbar navbar-fixed-bottom"
 	style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);">
 	<div class="navbar-inner">

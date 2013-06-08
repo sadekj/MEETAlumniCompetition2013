@@ -5,6 +5,13 @@
 			<a class="brand" href="index.jsp"><img src="images/MEET.png" /></a>
 			<ul class="nav">
 				<li id="home"><a href="index.jsp">Home</a></li>
+				<%
+					if (session.getAttribute("user") != null) {
+				%>
+				<li id="rounds"><a href="rounds.jsp">Rounds</a></li>
+				<%
+					}
+				%>
 				<li id="projects"><a href="dashboard.jsp">Dashboard</a></li>
 			</ul>
 			<ul class="nav pull-right">

@@ -1,5 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <html>
 <head>
+<%String title = "This is to be changed to dynamic title from DB...";%>
+<title><%=title%></title>
 <%@include file="head.jsp"%>
 <link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
@@ -52,7 +56,6 @@
 				</section>
 			</section>
 			<section id="signIn">
-				<section id="lAlert"></section>
 				<section class="fC">
 					<form class="f" action="Login" method="post">
 						<input id="uNL" class="fE" name="username" type="text"
