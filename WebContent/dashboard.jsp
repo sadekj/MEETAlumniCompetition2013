@@ -12,31 +12,35 @@
 <script type="text/javascript"
 	src="jquery.tablesorter/jquery.tablesorter.min.js"></script>
 <script type="text/javascript">
-	function loadSort(){
-		$("#myTable").tablesorter();		
+	function loadSort() {
+		$("#myTable").tablesorter();
 	}
 	$(function() {
 		loadScores(1);
-		setTimeout('loadSort()',3000);
+		setTimeout('loadSort()', 3000);
 	});
 </script>
 <style type="text/css">
-    	table { float: left; margin: 140px 40px 0 0;  }
-    	td input { border: 1px solid orange; background: yellow; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; position: absolute; padding: 8px 0; text-align: center; width: 60px; margin: -17px 0 0 4px; font-size: 1.4em; }
-    	td.input { padding: 0; position: relative; }
-    	.visualize { float: left; }
-    	#chart{
-    		float: right;
-    		position: absolute;
-    	}
-    </style>
+/*     	table { float: left; margin: 140px 40px 0 0;  } */
+/*     	td input { border: 1px solid orange; background: yellow; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; position: absolute; padding: 8px 0; text-align: center; width: 60px; margin: -17px 0 0 4px; font-size: 1.4em; } */
+/*     	td.input { padding: 0; position: relative; } */
+/*     	.visualize { float: left; } */
+/*     	#chart{ */
+/*     		float: right; */
+/*     		position: absolute; */
+/*     	} */
+#chartContainer {
+	min-height: 500px;	
+}
+</style>
 <title>Dashboard</title>
 </head>
 <body onmousemove="loadScores(2)">
 	<%@include file="header.jsp"%>
 	<div class="container">
 		<div id="allscores" onclick="loadSort()"></div>
-		<p id="chart"></p>
+		<div id="chartContainer">
+		</div>
 
 
 

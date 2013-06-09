@@ -2,6 +2,11 @@
 $(function() {
 	$('table')
 	   .visualize()
-	   .appendTo('p')
+	   .appendTo('#chartContainer')
 	   .trigger('visualizeRefresh');
+	autoUpdate();
 });
+function autoUpdate(){
+	 $('.visualize').trigger('visualizeRefresh');
+	 setTimeout('autoUpdate()', 1000);
+}

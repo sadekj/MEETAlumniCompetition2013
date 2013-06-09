@@ -51,8 +51,8 @@ function updateScores() {
 }
 function updateChart() {
 	$('.visualize').trigger('visualizeRefresh');
-	document.getElementById("chart").innerHTML = "";
-	$('table').visualize().appendTo('p').trigger('visualizeRefresh');
+	document.getElementById("chartContainer").innerHTML = "";
+	$('table').visualize().appendTo('#chartContainer').trigger('visualizeRefresh');
 }
 function loadChart() {
 	enhance({
