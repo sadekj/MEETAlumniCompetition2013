@@ -15,7 +15,17 @@
 				<li id="projects"><a href="dashboard.jsp">Dashboard</a></li>
 			</ul>
 			<ul class="nav pull-right">
-				<li id="login"><a href="index.jsp">Login</a></li>
+				<%
+					if (session.getAttribute("user") != null) {
+				%>
+				<li id="logout"><a href="Logout">Logout</a></li>
+				<%
+					} else {
+				%>
+				<li id="login"><a href="index.jsp?rid=liB">Login</a></li>
+				<%
+					}
+				%>
 			</ul>
 		</div>
 	</div>

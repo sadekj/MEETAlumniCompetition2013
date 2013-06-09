@@ -1,5 +1,5 @@
-$(document).ready($("#oL").css("background-color", "#E06040"));
-$("#signIn").hide();
+//Setting the correct navBar element as active 
+$(document).ready($('#login').addClass('active'));
 $('#lSubmit').attr("disabled", "disabled");
 $('#submit').attr("disabled", "disabled");
 

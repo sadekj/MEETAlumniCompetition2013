@@ -2,7 +2,11 @@
 	pageEncoding="UTF-8"%>
 <html>
 <head>
-<%String title = "This is to be changed to dynamic title from DB...";%>
+<%
+	boolean rCh = request.getParameter("rid") != null
+			&& request.getParameter("rid").equals("liB");
+	String title = "This is to be changed to dynamic title from DB...";
+%>
 <title><%=title%></title>
 <%@include file="head.jsp"%>
 <link rel="stylesheet" type="text/css" href="css/index.css">
@@ -12,7 +16,11 @@
 	<%
 		if (session.getAttribute("user") != null) {
 	%>
-	<section id="mainR"></section>
+	<section id="mainR">
+		<h1
+			style="color: #204080; text-align: center; vertical-align: middle;">AND
+			YOU'RE LOGGED IN!</h1>
+	</section>
 	<%
 		} else {
 	%>
@@ -22,6 +30,20 @@
 		</h2>
 		<section id="sB">
 			<section id="oC">
+				<%
+					if (rCh) {
+				%>
+				<section class="o" id="oL">
+					<a id="vA1" class="vA un" href="javascript:void(0);"
+						onclick="scroll(1)">Sign Up</a>
+				</section>
+				<section class="o" id="oR">
+					<a id="vA2" class="vA" href="javascript:void(0);"
+						onclick="scroll(2)">Login</a>
+				</section>
+				<%
+					} else {
+				%>
 				<section class="o" id="oL">
 					<a id="vA1" class="vA" href="javascript:void(0);"
 						onclick="scroll(1)">Sign Up</a>
@@ -30,6 +52,9 @@
 					<a id="vA2" class="vA un" href="javascript:void(0);"
 						onclick="scroll(2)">Login</a>
 				</section>
+				<%
+					}
+				%>
 			</section>
 			<section id="alert"></section>
 			<section id="signUp">
@@ -84,11 +109,26 @@
 </script>
 <%
 	} else {
+		if (rCh) {
 %>
-<script type="text/javascript">
-	//Setting the correct navBar element as active 
-	$(document).ready($('#login').addClass('active'));
+<script>
+	$(document).ready($("#oR").css("background-color", "#E06040"));
+	$("#signUp").hide();
+	$("#signIn").show();
+	$("#sB").css("height", "180px");
 </script>
+<%
+	} else {
+%>
+<script>
+	$(document).ready($("#oL").css("background-color", "#E06040"));
+	$("#signIn").hide();
+	$("#signUp").show();
+	$("#sB").css("height", "300px");
+</script>
+<%
+	}
+%>
 <script src="script/index.js"></script>
 <%
 	}
