@@ -121,5 +121,33 @@ function approve(userid) {
 		xhrequest.open("POST", strURL, true);
 		xhrequest.send(null);
 	}
-	setTimeout("loadList()", 3000);
+	setTimeout("loadList('Pending')", 3000);
+}
+function enable(userid) {
+	xhrequest = null;
+	try {
+		xhrequest = getXMLHttpRequest();
+	} catch (error) {
+		document.write("Cannot run AJAX on this browser!");
+	}
+	if (xhrequest != null) {
+		strURL = "UpdateUserStatus?user="+userid+"&status=Approve";
+		xhrequest.open("POST", strURL, true);
+		xhrequest.send(null);
+	}
+	setTimeout("loadList('Disabled')", 3000);
+}
+function disable(userid) {
+	xhrequest = null;
+	try {
+		xhrequest = getXMLHttpRequest();
+	} catch (error) {
+		document.write("Cannot run AJAX on this browser!");
+	}
+	if (xhrequest != null) {
+		strURL = "UpdateUserStatus?user="+userid+"&status=Disabled";
+		xhrequest.open("POST", strURL, true);
+		xhrequest.send(null);
+	}
+	setTimeout("loadList('Approved')", 3000);
 }
