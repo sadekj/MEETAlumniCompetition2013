@@ -64,3 +64,62 @@ function loadChart() {
 				'css/visualize-dark.css' ]
 	});
 }
+function addScore() {
+	var teamid = document.getElementById("team").value;
+	var roundid = document.getElementById("round").value;
+	var score = document.getElementById("score").value;
+	var description = document.getElementById("description").value;
+	xhrequest = null;
+	try {
+		xhrequest = getXMLHttpRequest();
+	} catch (error) {
+		document.write("Cannot run AJAX on this browser!");
+	}
+	if (xhrequest != null) {
+		strURL = "AddScore?team=" + teamid + "&round=" + roundid
+				+ "&value=" + score + "&description=" + description;
+		xhrequest.onreadystatechange = updateStatus;
+		xhrequest.open("POST", strURL, true);
+		xhrequest.send(null);
+	}
+}
+function updateStatus() {
+	if (xhrequest.readyState == 4 && xhrequest.status == 200) {
+		var strResponse = xhrequest.responseText;
+		document.getElementById("status").innerHTML = strResponse;
+	}
+}
+function loadList(status) {
+	xhrequest = null;
+	try {
+		xhrequest = getXMLHttpRequest();
+	} catch (error) {
+		document.write("Cannot run AJAX on this browser!");
+	}
+	if (xhrequest != null) {
+		strURL = "AllUsers?status="+status;
+		xhrequest.onreadystatechange = updateList;
+		xhrequest.open("POST", strURL, true);
+		xhrequest.send(null);
+	}
+}
+function updateList() {
+	if (xhrequest.readyState == 4 && xhrequest.status == 200) {
+		var strResponse = xhrequest.responseText;
+		document.getElementById("pendingContainer").innerHTML = strResponse;
+	}
+}
+function approve(userid) {
+	xhrequest = null;
+	try {
+		xhrequest = getXMLHttpRequest();
+	} catch (error) {
+		document.write("Cannot run AJAX on this browser!");
+	}
+	if (xhrequest != null) {
+		strURL = "UpdateUserStatus?user="+userid+"&status=Approve";
+		xhrequest.open("POST", strURL, true);
+		xhrequest.send(null);
+	}
+	setTimeout("loadList()", 3000);
+}

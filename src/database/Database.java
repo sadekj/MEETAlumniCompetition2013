@@ -25,9 +25,10 @@ public class Database {
 
 	private Connection createConnection() {
 		if (connection == null) {
-//			String url = "jdbc:mysql://127.13.81.130:3306/MEETAlumniCompetition2013";
-//			String username = "adminUjVsItP";
-//			String password = "qxCxPNB43QKx";
+			// String url =
+			// "jdbc:mysql://127.13.81.130:3306/MEETAlumniCompetition2013";
+			// String username = "adminUjVsItP";
+			// String password = "qxCxPNB43QKx";
 			String url = "jdbc:mysql://localhost/MEETAlumniCompetition2013";
 			String username = "root";
 			String password = "";
@@ -376,6 +377,51 @@ public class Database {
 		return rounds;
 	}
 
+	public ArrayList<User> getAllPendingUsers() {
+		String query = "SELECT * FROM user WHERE `status`='Pending'";
+		PreparedStatement ps;
+		ArrayList<User> users = new ArrayList<User>();
+		try {
+			ps = connection.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+				users.add(new User(rs.getInt("id"), rs.getString("fname"), rs.getString("lname"), rs.getString("username"), "", rs.getString("img"), rs.getString("status"), rs.getString("email")));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+
+	public ArrayList<User> getAllApprovedUsers() {
+		String query = "SELECT * FROM user WHERE `status`='Approved'";
+		PreparedStatement ps;
+		ArrayList<User> users = new ArrayList<User>();
+		try {
+			ps = connection.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+				users.add(new User(rs.getInt("id"), rs.getString("fname"), rs.getString("lname"), rs.getString("username"), "", rs.getString("img"), rs.getString("status"), rs.getString("email")));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+	
+	public ArrayList<User> getAllDisabledUsers() {
+		String query = "SELECT * FROM user WHERE `status`='Disabled'";
+		PreparedStatement ps;
+		ArrayList<User> users = new ArrayList<User>();
+		try {
+			ps = connection.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+				users.add(new User(rs.getInt("id"), rs.getString("fname"), rs.getString("lname"), rs.getString("username"), "", rs.getString("img"), rs.getString("status"), rs.getString("email")));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+	
 	public boolean addScore(Score score, User creator, Team team, Round round) {
 		String query = "INSERT INTO score(`value`,`description`,`userid`)VALUES(?,?,?)";
 		PreparedStatement ps;
@@ -457,10 +503,12 @@ public class Database {
 	}
 
 	public static void main(String[] args) {
-		User user = new User(1, "firstname", "lastname", "username", "password", "img url", "Approved", "email");
-		Team team = new Team(1, "name", "description");
-		Round round = new Round(2, "Roundtitle", "RoundDescription", "Closed");
-		Score score = new Score(1, 70.7, "description", user);
+		// User user = new User(1, "firstname", "lastname", "username",
+		// "password", "img url", "Approved", "email");
+		// Team team = new Team(1, "name", "description");
+		// Round round = new Round(2, "Roundtitle", "RoundDescription",
+		// "Closed");
+		// Score score = new Score(1, 70.7, "description", user);
 		// Group group = new Group(1, "name", "description");
 		// Database.getInstance().signup(user);
 		// Database.getInstance().approveUser(user);
@@ -471,8 +519,8 @@ public class Database {
 		// Database.getInstance().addUserToTeam(user, team);
 		// System.out.println(Database.getInstance().isInGroup(user, group));
 		// System.out.println(Database.getInstance().isInTeam(user, team));
-//		Database.getInstance().createRound(round);
-//		Database.getInstance().addScore(score, user, team, round);
-		System.out.println(Database.getInstance().getScore(1).getValue());
+		// Database.getInstance().createRound(round);
+		// Database.getInstance().addScore(score, user, team, round);
+		// System.out.println(Database.getInstance().getScore(1).getValue());
 	}
 }
