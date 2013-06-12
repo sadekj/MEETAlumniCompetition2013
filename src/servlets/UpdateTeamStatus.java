@@ -11,19 +11,20 @@ import javax.servlet.http.HttpSession;
 
 import database.Database;
 import entities.Group;
+import entities.Team;
 import entities.User;
 
 /**
- * Servlet implementation class UpdateUserStatus
+ * Servlet implementation class UpdateTeamStatus
  */
-@WebServlet("/UpdateUserStatus")
-public class UpdateUserStatus extends HttpServlet {
+@WebServlet("/UpdateTeamStatus")
+public class UpdateTeamStatus extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public UpdateUserStatus() {
+	public UpdateTeamStatus() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -33,7 +34,7 @@ public class UpdateUserStatus extends HttpServlet {
 	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		doPost(request, response);
 	}
 
 	/**
@@ -46,23 +47,23 @@ public class UpdateUserStatus extends HttpServlet {
 			User creator = (User) session.getAttribute("user");
 			Group staff = Database.getInstance().getGroup(2);
 			if (Database.getInstance().isInGroup(creator, staff)) {
-				String struserid = request.getParameter("user");
+				String strteamid = request.getParameter("team");
 				String status = request.getParameter("status");
 				try {
-					int userid = Integer.parseInt(struserid);
-					User user = Database.getInstance().getUser(userid);
+					int teamid = Integer.parseInt(strteamid);
+					Team team = Database.getInstance().getTeam(teamid);
 					boolean success = false;
 					if (status.equals("Approve")) {
-						success = Database.getInstance().approveUser(user);
+						success = Database.getInstance().approveTeam(team);
 					} else if (status.equals("Disable")) {
-						success = Database.getInstance().disableUser(user);
+						success = Database.getInstance().disableTeam(team);
 					}
 					if (success)
 						response.getOutputStream().print("Sucess");
 					else
 						response.getOutputStream().print("Failed");
 				} catch (NumberFormatException e) {
-					response.getOutputStream().print("Invalid User");
+					response.getOutputStream().print("Invalid Team");
 				}
 			} else {
 				response.getOutputStream().print("You are not staff");
@@ -72,4 +73,5 @@ public class UpdateUserStatus extends HttpServlet {
 		}
 
 	}
+
 }

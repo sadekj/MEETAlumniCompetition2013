@@ -121,20 +121,50 @@ public class Database {
 		try {
 			ps = connection.prepareStatement(query);
 			ps.setInt(1, user.getId());
-			return ps.execute();
+			ps.execute();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return false;
 	}
 
-	public boolean DisableUser(User user) {
+	public boolean disableUser(User user) {
 		String query = "UPDATE user SET `status`='Disabled' WHERE `id`=?";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
 			ps.setInt(1, user.getId());
-			return ps.execute();
+			ps.execute();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean approveTeam(Team team) {
+		String query = "UPDATE team SET `status`='Approved' WHERE `id`=?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, team.getId());
+			ps.execute();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean disableTeam(Team team) {
+		String query = "UPDATE team SET `status`='Disabled' WHERE `id`=?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, team.getId());
+			ps.execute();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -142,13 +172,15 @@ public class Database {
 	}
 
 	public boolean createTeam(Team team) {
-		String query = "INSERT INTO team(`name`,`description`)VALUES(?,?)";
+		String query = "INSERT INTO team(`name`,`description`,`status`)VALUES(?,?)";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
 			ps.setString(1, team.getName());
 			ps.setString(2, team.getDescription());
-			return ps.execute();
+			ps.setString(3, team.getStatus());
+			ps.execute();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -162,7 +194,8 @@ public class Database {
 			ps = connection.prepareStatement(query);
 			ps.setString(1, group.getName());
 			ps.setString(2, group.getDescription());
-			return ps.execute();
+			ps.execute();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -177,7 +210,8 @@ public class Database {
 			ps.setString(1, round.getTitle());
 			ps.setString(2, round.getDescription());
 			ps.setString(3, round.getStatus());
-			return ps.execute();
+			ps.execute();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -191,7 +225,23 @@ public class Database {
 			ps = connection.prepareStatement(query);
 			ps.setInt(1, user.getId());
 			ps.setInt(2, team.getId());
-			return ps.execute();
+			ps.execute();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean removeUserFromTeam(User user, Team team) {
+		String query = "DELETE FROM `user_team` WHERE `userid`=? AND `teamid`=?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, user.getId());
+			ps.setInt(2, team.getId());
+			ps.execute();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -205,7 +255,8 @@ public class Database {
 			ps = connection.prepareStatement(query);
 			ps.setInt(1, user.getId());
 			ps.setInt(2, group.getId());
-			return ps.execute();
+			ps.execute();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -305,7 +356,7 @@ public class Database {
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				team = new Team(rs.getInt("id"), rs.getString("name"), rs.getString("description"));
+				team = new Team(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getString("status"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -355,7 +406,7 @@ public class Database {
 			ps = connection.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next())
-				teams.add(new Team(rs.getInt("id"), rs.getString("name"), rs.getString("description")));
+				teams.add(new Team(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getString("status")));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -406,7 +457,7 @@ public class Database {
 		}
 		return users;
 	}
-	
+
 	public ArrayList<User> getAllDisabledUsers() {
 		String query = "SELECT * FROM user WHERE `status`='Disabled'";
 		PreparedStatement ps;
@@ -421,7 +472,52 @@ public class Database {
 		}
 		return users;
 	}
-	
+
+	public ArrayList<Team> getAllPendingTeams() {
+		String query = "SELECT * FROM team WHERE `status`='Pending'";
+		PreparedStatement ps;
+		ArrayList<Team> teams = new ArrayList<Team>();
+		try {
+			ps = connection.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+				teams.add(new Team(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getString("status")));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return teams;
+	}
+
+	public ArrayList<Team> getAllApprovedTeams() {
+		String query = "SELECT * FROM team WHERE `status`='Approved'";
+		PreparedStatement ps;
+		ArrayList<Team> teams = new ArrayList<Team>();
+		try {
+			ps = connection.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+				teams.add(new Team(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getString("status")));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return teams;
+	}
+
+	public ArrayList<Team> getAllDisabledTeams() {
+		String query = "SELECT * FROM team WHERE `status`='Disabled'";
+		PreparedStatement ps;
+		ArrayList<Team> teams = new ArrayList<Team>();
+		try {
+			ps = connection.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+				teams.add(new Team(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getString("status")));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return teams;
+	}
+
 	public boolean addScore(Score score, User creator, Team team, Round round) {
 		String query = "INSERT INTO score(`value`,`description`,`userid`)VALUES(?,?,?)";
 		PreparedStatement ps;
@@ -462,7 +558,8 @@ public class Database {
 			ps.setString(2, post.getDescription());
 			ps.setInt(3, round.getId());
 			ps.setInt(4, creator.getId());
-			return ps.execute();
+			ps.execute();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -485,8 +582,24 @@ public class Database {
 		return countdown;
 	}
 
+	public Countdown getCountdown(int id) {
+		String query = "SELECT * FROM countdowns WHERE id = ?";
+		PreparedStatement ps;
+		Countdown countdown = null;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next())
+				countdown = new Countdown(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getDate("enddate"), rs.getTime("endtime"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return countdown;
+	}
+
 	public ArrayList<User> getMembers(Team team) {
-		String query = "SELECT * from `user`, `user_team` WHERE `user.id` = `user_team.userid` AND `user_team.teamid` = ? ";
+		String query = "SELECT * from `user` WHERE `id` IN(SELECT `userid` FROM `user_team` WHERE `teamid` = ?) ";
 		PreparedStatement ps;
 		ArrayList<User> users = new ArrayList<User>();
 		try {
@@ -502,9 +615,56 @@ public class Database {
 		return users;
 	}
 
+	public ArrayList<User> getUsersNotInTeams() {
+		String query = "SELECT * from `user` WHERE `id` NOT IN(SELECT `userid` from `user_team`)";
+		PreparedStatement ps;
+		ArrayList<User> users = new ArrayList<User>();
+		try {
+			ps = connection.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				users.add(new User(rs.getInt("id"), rs.getString("fname"), rs.getString("lname"), rs.getString("username"), "", rs.getString("img"), rs.getString("status"), rs.getString("email")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+
+	public Team getTeam(User user) {
+		String query = "SELECT * FROM `team` WHERE `id`=(SELECT `teamid` from `user_team` WHERE `userid`=?)";
+		PreparedStatement ps;
+		Team team = null;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, user.getId());
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				team = new Team(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getString("status"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return team;
+	}
+
+	public boolean isInTeam(User user) {
+		String query = "SELECT * FROM user_team WHERE `userid`=?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, user.getId());
+			ResultSet rs = ps.executeQuery();
+			if (rs.next())
+				return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	public static void main(String[] args) {
-		// User user = new User(1, "firstname", "lastname", "username",
-		// "password", "img url", "Approved", "email");
+		User user = new User(1, "firstname", "lastname", "username", "password", "img url", "Approved", "email");
 		// Team team = new Team(1, "name", "description");
 		// Round round = new Round(2, "Roundtitle", "RoundDescription",
 		// "Closed");
@@ -522,5 +682,7 @@ public class Database {
 		// Database.getInstance().createRound(round);
 		// Database.getInstance().addScore(score, user, team, round);
 		// System.out.println(Database.getInstance().getScore(1).getValue());
+		Team team = Database.getInstance().getTeam(user);
+		System.out.print(team.getName());
 	}
 }
