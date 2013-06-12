@@ -225,5 +225,5 @@
             }
             return this;
         });
-    }
+    };
 })(jQuery);
