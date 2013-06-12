@@ -10,8 +10,8 @@
 </script>
 <title>Pending Users</title>
 </head>
-<body onload="loadList('<%= request.getParameter("status")%>')">
-<div id="ContainerUser"></div>
-<button onclick="loadList('<%= request.getParameter("status")%>')">Refresh</button>
+<body onload="loadListTeam('<%= request.getParameter("status")%>')">
+<div id="ContainerTeam"></div>
+<button onclick="loadListTeam('<%= request.getParameter("status")%>')">Refresh</button>
 </body>
 </html>

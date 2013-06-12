@@ -36,10 +36,10 @@ function loadScores(first) {
 		xhrequest.onreadystatechange = updateScores;
 		xhrequest.open("GET", strURL, true);
 		xhrequest.send(null);
-		 $('.visualize').trigger('visualizeRefresh');
-		if (first==1)
+		$('.visualize').trigger('visualizeRefresh');
+		if (first == 1)
 			loadChart();
-//		setTimeout("loadScores(2)", 2000);
+		// setTimeout("loadScores(2)", 2000);
 	}
 }
 function updateScores() {
@@ -52,7 +52,8 @@ function updateScores() {
 function updateChart() {
 	$('.visualize').trigger('visualizeRefresh');
 	document.getElementById("chartContainer").innerHTML = "";
-	$('table').visualize().appendTo('#chartContainer').trigger('visualizeRefresh');
+	$('table').visualize().appendTo('#chartContainer').trigger(
+			'visualizeRefresh');
 }
 function loadChart() {
 	enhance({
@@ -60,8 +61,7 @@ function loadChart() {
 			src : 'script/jQuery-Visualize/js/excanvas.js',
 			iecondition : 'all'
 		}, 'script/visualize.jQuery.js', 'script/visualize.js', ],
-		loadStyles : [ 'css/visualize.css',
-				'css/visualize-dark.css' ]
+		loadStyles : [ 'css/visualize.css', 'css/visualize-dark.css' ]
 	});
 }
 function addScore() {
@@ -76,8 +76,8 @@ function addScore() {
 		document.write("Cannot run AJAX on this browser!");
 	}
 	if (xhrequest != null) {
-		strURL = "AddScore?team=" + teamid + "&round=" + roundid
-				+ "&value=" + score + "&description=" + description;
+		strURL = "AddScore?team=" + teamid + "&round=" + roundid + "&value="
+				+ score + "&description=" + description;
 		xhrequest.onreadystatechange = updateStatus;
 		xhrequest.open("POST", strURL, true);
 		xhrequest.send(null);
@@ -97,7 +97,7 @@ function loadList(status) {
 		document.write("Cannot run AJAX on this browser!");
 	}
 	if (xhrequest != null) {
-		strURL = "AllUsers?status="+status;
+		strURL = "AllUsers?status=" + status;
 		xhrequest.onreadystatechange = updateList;
 		xhrequest.open("POST", strURL, true);
 		xhrequest.send(null);
@@ -106,7 +106,7 @@ function loadList(status) {
 function updateList() {
 	if (xhrequest.readyState == 4 && xhrequest.status == 200) {
 		var strResponse = xhrequest.responseText;
-		document.getElementById("pendingContainer").innerHTML = strResponse;
+		document.getElementById("ContainerUser").innerHTML = strResponse;
 	}
 }
 function approve(userid) {
@@ -117,7 +117,7 @@ function approve(userid) {
 		document.write("Cannot run AJAX on this browser!");
 	}
 	if (xhrequest != null) {
-		strURL = "UpdateUserStatus?user="+userid+"&status=Approve";
+		strURL = "UpdateUserStatus?user=" + userid + "&status=Approve";
 		xhrequest.open("POST", strURL, true);
 		xhrequest.send(null);
 	}
@@ -131,7 +131,7 @@ function enable(userid) {
 		document.write("Cannot run AJAX on this browser!");
 	}
 	if (xhrequest != null) {
-		strURL = "UpdateUserStatus?user="+userid+"&status=Approve";
+		strURL = "UpdateUserStatus?user=" + userid + "&status=Approve";
 		xhrequest.open("POST", strURL, true);
 		xhrequest.send(null);
 	}
@@ -145,9 +145,134 @@ function disable(userid) {
 		document.write("Cannot run AJAX on this browser!");
 	}
 	if (xhrequest != null) {
-		strURL = "UpdateUserStatus?user="+userid+"&status=Disabled";
+		strURL = "UpdateUserStatus?user=" + userid + "&status=Disable";
 		xhrequest.open("POST", strURL, true);
 		xhrequest.send(null);
 	}
 	setTimeout("loadList('Approved')", 3000);
+}
+
+function loadListTeam(status) {
+	xhrequest = null;
+	try {
+		xhrequest = getXMLHttpRequest();
+	} catch (error) {
+		document.write("Cannot run AJAX on this browser!");
+	}
+	if (xhrequest != null) {
+		strURL = "AllTeams?status=" + status;
+		xhrequest.onreadystatechange = updateListTeam;
+		xhrequest.open("POST", strURL, true);
+		xhrequest.send(null);
+	}
+}
+function updateListTeam() {
+	if (xhrequest.readyState == 4 && xhrequest.status == 200) {
+		var strResponse = xhrequest.responseText;
+		document.getElementById("ContainerTeam").innerHTML = strResponse;
+	}
+}
+function approveTeam(teamid) {
+	xhrequest = null;
+	try {
+		xhrequest = getXMLHttpRequest();
+	} catch (error) {
+		document.write("Cannot run AJAX on this browser!");
+	}
+	if (xhrequest != null) {
+		strURL = "UpdateTeamStatus?user=" + teamid + "&status=Approve";
+		xhrequest.open("POST", strURL, true);
+		xhrequest.send(null);
+	}
+	setTimeout("loadListTeam('Pending')", 3000);
+}
+function enableTeam(teamid) {
+	xhrequest = null;
+	try {
+		xhrequest = getXMLHttpRequest();
+	} catch (error) {
+		document.write("Cannot run AJAX on this browser!");
+	}
+	if (xhrequest != null) {
+		strURL = "UpdateTeamStatus?user=" + teamid + "&status=Approve";
+		xhrequest.open("POST", strURL, true);
+		xhrequest.send(null);
+	}
+	setTimeout("loadListTeam('Disabled')", 3000);
+}
+function disableTeam(teamid) {
+	xhrequest = null;
+	try {
+		xhrequest = getXMLHttpRequest();
+	} catch (error) {
+		document.write("Cannot run AJAX on this browser!");
+	}
+	if (xhrequest != null) {
+		strURL = "UpdateTeamStatus?user=" + teamid + "&status=Disable";
+		xhrequest.open("POST", strURL, true);
+		xhrequest.send(null);
+	}
+	setTimeout("loadListTeam('Approved')", 3000);
+}
+function loadTeamMembers(id) {
+	xhrequest = null;
+	try {
+		xhrequest = getXMLHttpRequest();
+	} catch (error) {
+		document.write("Cannot run AJAX on this browser!");
+	}
+	if (xhrequest != null) {
+		strURL = "MemberList?id=" + id;
+		xhrequest.onreadystatechange = updateTeamMembers;
+		xhrequest.open("POST", strURL, true);
+		xhrequest.send(null);
+	}
+}
+function updateTeamMembers() {
+	if (xhrequest.readyState == 4 && xhrequest.status == 200) {
+		var strResponse = xhrequest.responseText;
+		document.getElementById("Members").innerHTML = strResponse;
+	}
+}
+function loadUsersNotInTeams(id) {
+	xhrequest = null;
+	try {
+		xhrequest = getXMLHttpRequest();
+	} catch (error) {
+		document.write("Cannot run AJAX on this browser!");
+	}
+	if (xhrequest != null) {
+		strURL = "UsersNotInTeams?id=" + id;
+		xhrequest.onreadystatechange = updateUsersNotInTeams;
+		xhrequest.open("POST", strURL, true);
+		xhrequest.send(null);
+	}
+}
+function updateUsersNotInTeams() {
+	if (xhrequest.readyState == 4 && xhrequest.status == 200) {
+		var strResponse = xhrequest.responseText;
+		document.getElementById("UsersNotInTeams").innerHTML = strResponse;
+	}
+}
+function addToTeam(teamid,userid) {
+	xhrequest = null;
+	try {
+		xhrequest = getXMLHttpRequest();
+	} catch (error) {
+		document.write("Cannot run AJAX on this browser!");
+	}
+	if (xhrequest != null) {
+		strURL = "AddUserToTeam?teamid=" + teamid+"&userid="+userid;
+		xhrequest.onreadystatechange = teamActionsStatus;
+		xhrequest.open("POST", strURL, true);
+		xhrequest.send(null);
+	}
+	setTimeout("loadUsersNotInTeams("+teamid+")", 100);
+	setTimeout("loadTeamMembers("+teamid+")", 200);
+}
+function teamActionsStatus() {
+	if (xhrequest.readyState == 4 && xhrequest.status == 200) {
+		var strResponse = xhrequest.responseText;
+		document.getElementById("teamActionsStatus").innerHTML = strResponse;
+	}
 }
