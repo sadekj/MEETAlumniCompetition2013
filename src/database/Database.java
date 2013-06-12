@@ -171,20 +171,26 @@ public class Database {
 		return false;
 	}
 
-	public boolean createTeam(Team team) {
+	public Team createTeam(Team team) {
 		String query = "INSERT INTO team(`name`,`description`,`status`)VALUES(?,?)";
 		PreparedStatement ps;
+		ResultSet generatedKeys;
 		try {
-			ps = connection.prepareStatement(query);
+			ps = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 			ps.setString(1, team.getName());
 			ps.setString(2, team.getDescription());
 			ps.setString(3, team.getStatus());
 			ps.execute();
-			return true;
+			generatedKeys = ps.getGeneratedKeys();
+			if (generatedKeys.next())
+				team.setId(generatedKeys.getInt(1));
+			else
+				throw new SQLException("Creating score failed, no generated key obtained.");
+			return team;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return false;
+		return team;
 	}
 
 	public boolean createGroup(Group group) {
