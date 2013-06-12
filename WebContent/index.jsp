@@ -109,12 +109,18 @@
 </script>
 <%
 	} else {
-		if (rCh) {
+%>
+<script>
+	//$(document).ready($('.navbar-fixed-top').hide());
+</script>
+<%
+	if (rCh) {
 %>
 <script>
 	$(document).ready($("#oR").css("background-color", "#E06040"));
 	$("#signUp").hide();
 	$("#signIn").show();
+	$("#login").html('<a href="index.jsp">Login</a>');
 	$("#sB").css("height", "180px");
 </script>
 <%
@@ -124,6 +130,7 @@
 	$(document).ready($("#oL").css("background-color", "#E06040"));
 	$("#signIn").hide();
 	$("#signUp").show();
+	$("#login").html('<a href="index.jsp?rid=liB">Sign Up</a>');
 	$("#sB").css("height", "300px");
 </script>
 <%

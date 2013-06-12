@@ -16,6 +16,7 @@ function scroll(y) {
 			cPA();
 			$("#signUp").css("display", "block");
 		}, 350);
+		$("#login").html('<a href="index.jsp?rid=liB">Sign Up</a>');
 	} else {
 		$("#oL").css("background-color", "rgba(0, 0, 0, 0)");
 		$("#oR").css("background-color", "#E06040");
@@ -28,7 +29,7 @@ function scroll(y) {
 			sIT();
 			$("#signIn").css("display", "block");
 		}, 200);
-		$("#sB").css("height", "180px");
+		$("#login").html('<a href="index.jsp">Login</a>');
 	}
 }
 
