@@ -109,12 +109,7 @@
 </script>
 <%
 	} else {
-%>
-<script>
-	//$(document).ready($('.navbar-fixed-top').hide());
-</script>
-<%
-	if (rCh) {
+		if (rCh) {
 %>
 <script>
 	$(document).ready($("#oR").css("background-color", "#E06040"));
