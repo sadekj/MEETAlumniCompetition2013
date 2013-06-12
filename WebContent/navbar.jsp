@@ -6,7 +6,8 @@
 			<ul class="nav">
 				<li id="home"><a href="index.jsp">Home</a></li>
 				<%
-					if (session.getAttribute("user") != null) {
+					boolean sessionCh = session.getAttribute("user") != null;
+					if (sessionCh) {
 				%>
 				<li id="rounds"><a href="rounds.jsp">Rounds</a></li>
 				<%
@@ -16,7 +17,7 @@
 			</ul>
 			<ul class="nav pull-right">
 				<%
-					if (session.getAttribute("user") != null) {
+					if (sessionCh) {
 				%>
 				<li id="logout"><a href="Logout">Logout</a></li>
 				<%
