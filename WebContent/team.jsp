@@ -24,6 +24,5 @@
 <div id="Members"></div>
 <div id="teamActionsStatus"></div>
 <div id="UsersNotInTeams"></div>
-<button onclick=""></button>
 </body>
 </html>

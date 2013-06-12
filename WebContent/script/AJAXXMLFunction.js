@@ -39,7 +39,7 @@ function loadScores(first) {
 		$('.visualize').trigger('visualizeRefresh');
 		if (first == 1)
 			loadChart();
-		// setTimeout("loadScores(2)", 2000);
+		 setTimeout("loadScores(2)", 5000);
 	}
 }
 function updateScores() {
@@ -263,6 +263,22 @@ function addToTeam(teamid,userid) {
 	}
 	if (xhrequest != null) {
 		strURL = "AddUserToTeam?teamid=" + teamid+"&userid="+userid;
+		xhrequest.onreadystatechange = teamActionsStatus;
+		xhrequest.open("POST", strURL, true);
+		xhrequest.send(null);
+	}
+	setTimeout("loadUsersNotInTeams("+teamid+")", 100);
+	setTimeout("loadTeamMembers("+teamid+")", 200);
+}
+function removeFromTeam(teamid,userid) {
+	xhrequest = null;
+	try {
+		xhrequest = getXMLHttpRequest();
+	} catch (error) {
+		document.write("Cannot run AJAX on this browser!");
+	}
+	if (xhrequest != null) {
+		strURL = "RemoveUserFromTeam?teamid=" + teamid+"&userid="+userid;
 		xhrequest.onreadystatechange = teamActionsStatus;
 		xhrequest.open("POST", strURL, true);
 		xhrequest.send(null);
