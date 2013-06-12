@@ -35,7 +35,7 @@
 </style>
 <title>Dashboard</title>
 </head>
-<body onmousemove="loadScores(2)">
+<body>
 	<%@include file="header.jsp"%>
 	<div class="container">
 		<div id="allscores" onclick="loadSort()"></div>
