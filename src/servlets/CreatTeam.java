@@ -55,6 +55,8 @@ public class CreatTeam extends HttpServlet {
 			} catch (Exception e) {
 				response.getOutputStream().print("Somthing went wrong contact your Administrator!");
 			}
+		} else {
+			response.getOutputStream().print("You are not logged in!");
 		}
 	}
 }

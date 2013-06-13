@@ -46,43 +46,43 @@ public class AllUsers extends HttpServlet {
 		if (session.getAttribute("user") != null) {
 			User creator = (User) session.getAttribute("user");
 			Group staff = Database.getInstance().getGroup(2);
-			if (Database.getInstance().isInGroup(creator, staff)) {
-				String status = request.getParameter("status");
-				response.getOutputStream().println("<table id='myTable' class='tablesorter' border=1>");
-				response.getOutputStream().println("<caption>All " + status + " Users</caption>");
-				response.getOutputStream().println("<thead>");
-				response.getOutputStream().println("<tr>");
-				response.getOutputStream().println("<th scope='col'>First Name</th>");
-				response.getOutputStream().println("<th scope='col'>Last Name</th>");
-				response.getOutputStream().println("<th scope='col'>Email</th>");
-				response.getOutputStream().println("</tr>");
-				response.getOutputStream().println("</thead>");
-				response.getOutputStream().println("<tbody>");
-				ArrayList<User> users;
-				String function;
-				if (status.equals("Pending")) {
-					users = Database.getInstance().getAllPendingUsers();
-					function = "approve";
-				} else if (status.equals("Disabled")) {
-					users = Database.getInstance().getAllDisabledUsers();
-					function = "enable";
-				} else {
-					users = Database.getInstance().getAllApprovedUsers();
-					function = "disable";
-				}
-				for (User user : users) {
-					response.getOutputStream().println("<tr>");
-					response.getOutputStream().println("<td>" + user.getfName() + "</td>");
-					response.getOutputStream().println("<td>" + user.getlName() + "</td>");
-					response.getOutputStream().println("<td>" + user.getEmail() + "</td>");
-					response.getOutputStream().println("<td><button onclick='"+function+"(" + user.getId() + ")'>"+function+"</button></td>");
-					response.getOutputStream().println("</tr>");
-				}
-				response.getOutputStream().println("</tbody>");
-				response.getOutputStream().println("</table>");
-			} else {
-				response.getOutputStream().print("You are not staff");
+			String status = "Approved";
+			boolean allowed = Database.getInstance().isInGroup(creator, staff);
+			if (allowed && request.getParameter("status") != null && !request.getParameter("status").equals("null")) {
+				status = request.getParameter("status");
 			}
+			response.getOutputStream().println("<table id='myTable' class='tablesorter' border=1>");
+			response.getOutputStream().println("<caption>All " + status + " Users</caption>");
+			response.getOutputStream().println("<thead>");
+			response.getOutputStream().println("<tr>");
+			response.getOutputStream().println("<th scope='col'>First Name</th>");
+			response.getOutputStream().println("<th scope='col'>Last Name</th>");
+			response.getOutputStream().println("<th scope='col'>Email</th>");
+			response.getOutputStream().println("</tr>");
+			response.getOutputStream().println("</thead>");
+			response.getOutputStream().println("<tbody>");
+			ArrayList<User> users;
+			String function;
+			if (status.equals("Pending") && allowed) {
+				users = Database.getInstance().getAllPendingUsers();
+				function = "approve";
+			} else if (status.equals("Disabled") && allowed) {
+				users = Database.getInstance().getAllDisabledUsers();
+				function = "enable";
+			} else {
+				users = Database.getInstance().getAllApprovedUsers();
+				function = "disable";
+			}
+			for (User user : users) {
+				response.getOutputStream().println("<tr>");
+				response.getOutputStream().println("<td>" + user.getfName() + "</td>");
+				response.getOutputStream().println("<td>" + user.getlName() + "</td>");
+				response.getOutputStream().println("<td>" + user.getEmail() + "</td>");
+				response.getOutputStream().println("<td><button onclick='" + function + "(" + user.getId() + ")'>" + function + "</button></td>");
+				response.getOutputStream().println("</tr>");
+			}
+			response.getOutputStream().println("</tbody>");
+			response.getOutputStream().println("</table>");
 		} else {
 			response.getOutputStream().print("Not logged in");
 		}

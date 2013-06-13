@@ -1,13 +1,16 @@
 package servlets;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import database.Database;
+import entities.Group;
 import entities.Team;
 import entities.User;
 
@@ -39,24 +42,35 @@ public class RemoveUserFromTeam extends HttpServlet {
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
-			String strteamid = request.getParameter("teamid");
-			String struserid = request.getParameter("userid");
-			int teamid = Integer.parseInt(strteamid);
-			int userid = Integer.parseInt(struserid);
-			User user = Database.getInstance().getUser(userid);
-			Team team = Database.getInstance().getTeam(teamid);
-			if (Database.getInstance().isInTeam(user)) {
-				if (Database.getInstance().removeUserFromTeam(user, team)) {
-					response.getOutputStream().print("User Removed");
+		HttpSession session = request.getSession();
+		if (session.getAttribute("user") != null) {
+			try {
+				User creator = (User) request.getAttribute("user");
+				Group staff = Database.getInstance().getGroup(2);
+				String strteamid = request.getParameter("teamid");
+				String struserid = request.getParameter("userid");
+				int teamid = Integer.parseInt(strteamid);
+				int userid = Integer.parseInt(struserid);
+				if (creator.getId() == userid || Database.getInstance().isInGroup(creator, staff)) {
+					User user = Database.getInstance().getUser(userid);
+					Team team = Database.getInstance().getTeam(teamid);
+					if (Database.getInstance().isInTeam(user)) {
+						if (Database.getInstance().removeUserFromTeam(user, team)) {
+							response.getOutputStream().print("User Removed");
+						} else {
+							response.getOutputStream().print("Removig has failed");
+						}
+					} else {
+						response.getOutputStream().print("User is already not in this team");
+					}
 				} else {
-					response.getOutputStream().print("Removig has failed");
+					response.getOutputStream().print("You are not allowed to do this action");
 				}
-			} else {
-				response.getOutputStream().print("User is already not in this team");
+			} catch (Exception e) {
+				response.getOutputStream().print("Error, please contact your Administrator!");
 			}
-		} catch (Exception e) {
-			response.getOutputStream().print("Error, please contact your Administrator!");
+		} else {
+			response.getOutputStream().print("You are not logged in!");
 		}
 	}
 
