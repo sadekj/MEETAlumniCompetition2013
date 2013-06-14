@@ -555,15 +555,15 @@ public class Database {
 		return false;
 	}
 
-	public boolean addPost(Post post, User creator, Round round) {
+	public boolean addPost(Post post) {
 		String query = "INSERT INTO post(`title`,`description`,`roundid`,`userid`)VALUES(?,?,?,?)";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 			ps.setString(1, post.getTitle());
 			ps.setString(2, post.getDescription());
-			ps.setInt(3, round.getId());
-			ps.setInt(4, creator.getId());
+			ps.setInt(3, post.getRound().getId());
+			ps.setInt(4, post.getCreator().getId());
 			ps.execute();
 			return true;
 		} catch (SQLException e) {
@@ -667,6 +667,23 @@ public class Database {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public ArrayList<Post> getAllPosts(Round round) {
+		String query = "SELECT * from `post` WHERE `roundid` =? ";
+		PreparedStatement ps;
+		ArrayList<Post> posts = new ArrayList<Post>();
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, round.getId());
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				posts.add(new Post(rs.getInt("id"), rs.getString("title"), rs.getString("description"), getUser(rs.getInt("userid")), round));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return posts;
 	}
 
 	public static void main(String[] args) {
