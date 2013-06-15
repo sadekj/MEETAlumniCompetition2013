@@ -36,7 +36,6 @@
 <title>Dashboard</title>
 </head>
 <body>
-	<%@include file="header.jsp"%>
 	<div class="container">
 		<div id="allscores" onclick="loadSort()"></div>
 		<div id="chartContainer">
@@ -45,6 +44,5 @@
 
 
 	</div>
-	<%@include file="footer.jsp"%>
 </body>
 </html>

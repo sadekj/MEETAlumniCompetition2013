@@ -13,7 +13,7 @@
 				<%
 					}
 				%>
-				<li id="projects"><a href="dashboard.jsp">Dashboard</a></li>
+				<li id="projects"><a href="dashboard.jsp" target="_blank">Dashboard</a></li>
 			</ul>
 			<ul class="nav pull-right">
 				<%

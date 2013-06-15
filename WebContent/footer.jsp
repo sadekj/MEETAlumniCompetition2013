@@ -3,10 +3,10 @@
 	style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);">
 	<div class="navbar-inner">
 		<div class="container" style="text-align: center;">
-			<h4>
+			<h4 style="text-align: center;">
 				<a href="http://meet.mit.edu/" target="_blank"> <img
 					src="images/MEET.png" />
-				</a> &copy; 2013
+				</a> <span style="vertical-align: sub;">&copy; 2013</span>
 			</h4>
 		</div>
 	</div>
