@@ -371,3 +371,52 @@ function groupActionsStatus() {
 		document.getElementById("groupActionsStatus").innerHTML = strResponse;
 	}
 }
+function openRound(roundid) {
+	xhrequest = null;
+	try {
+		xhrequest = getXMLHttpRequest();
+	} catch (error) {
+		document.write("Cannot run AJAX on this browser!");
+	}
+	if (xhrequest != null) {
+		strURL = "UpdateRoundStatus?round=" + roundid + "&status=Open";
+		xhrequest.open("POST", strURL, true);
+		xhrequest.send(null);
+	}
+	setTimeout("location.reload()", 3000);
+}
+function closeRound(roundid) {
+	xhrequest = null;
+	try {
+		xhrequest = getXMLHttpRequest();
+	} catch (error) {
+		document.write("Cannot run AJAX on this browser!");
+	}
+	if (xhrequest != null) {
+		strURL = "UpdateRoundStatus?round=" + roundid + "&status=Close";
+		xhrequest.open("POST", strURL, true);
+		xhrequest.send(null);
+	}
+	setTimeout("location.reload()", 3000);
+}
+function countdown(countdownid, page) {
+	xhrequest = null;
+	try {
+		xhrequest = getXMLHttpRequest();
+	} catch (error) {
+		document.write("Cannot run AJAX on this browser!");
+	}
+	if (xhrequest != null) {
+		strURL = "countdown.jsp?id=" + countdownid + "&page=" + page;
+		xhrequest.onreadystatechange = updateCountdown;
+		xhrequest.open("POST", strURL, true);
+		xhrequest.send(null);
+	}
+}
+function updateCountdown() {
+	if (xhrequest.readyState == 4 && xhrequest.status == 200) {
+		var strResponse = xhrequest.responseText;
+		if (strResponse == "done")
+			document.location.href = "index.jsp";
+	}
+}

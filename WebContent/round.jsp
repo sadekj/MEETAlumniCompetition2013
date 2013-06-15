@@ -6,6 +6,7 @@
 <%@ page import="entities.Group"%>
 <%@ page import="entities.User"%>
 <%@ page import="entities.Post"%>
+<%@ page import="entities.Countdown"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -22,12 +23,24 @@
 </script>
 <body>
 <%@ include file="header.jsp" %>
-	<div class="container">
-		<%
+<%
 		if (session.getAttribute("user") != null) {
 			if (request.getParameter("id") != null) {
-				try {
-					Round round = Database.getInstance().getRound(Integer.parseInt(request.getParameter("id")));
+	try {
+		Round round = Database.getInstance().getRound(Integer.parseInt(request.getParameter("id")));
+		Countdown countdown = Database.getInstance().getCountdown(round);
+		int countdownid = 0;
+		if(countdown!=null)
+			countdownid=countdown.getId();
+		if(!Database.getInstance().isCountdownDone(countdownid)){
+	%>
+	<script type="text/javascript">
+		document.location.href="countdown.jsp?id=1";
+		</script>
+	<%
+		}%>
+	<div class="container">
+		<%
 					ArrayList<Post> posts = Database.getInstance().getAllPosts(round);
 					for(Post post : posts){
 						%>

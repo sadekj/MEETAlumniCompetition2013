@@ -8,6 +8,7 @@
 <html>
 <head>
 <%@ include file="head.jsp"%>
+<script type="text/javascript" src="script/AJAXXMLFunction.js"></script>
 <title>Rounds</title>
 <script type="text/javascript">
 	$(function() {
@@ -24,17 +25,31 @@
 		<%
 			if (session.getAttribute("user") != null) {
 				try {
+					boolean allowed = false;
+					Group staff = Database.getInstance().getGroup(2);
+					User user = (User) session.getAttribute("user");
+					if (Database.getInstance().isInGroup(user, staff))
+						allowed = true;
 					ArrayList<Round> rounds = Database.getInstance().getAllRounds();
 					for (Round round : rounds) {
 		%>
 		<div>
 			<a href="round.jsp?id=<%=round.getId()%>"><%=round.getTitle()%></a>
+			<%
+				if (round.getStatus().equals("Closed")) {
+			%>
+			<button onclick="openRound(<%=round.getId()%>)">Open</button>
+			<%
+				} else {
+			%>
+			<button onclick="closeRound(<%=round.getId()%>)">Close</button>
+			<%
+				}
+			%>
 		</div>
 		<%
 			}
-					Group staff = Database.getInstance().getGroup(2);
-					User user = (User) session.getAttribute("user");
-					if (Database.getInstance().isInGroup(user, staff)) {
+					if (allowed) {
 		%><a id="createRound" href="#">Create Round</a>
 		<form action="CreateRound" method="POST">
 			<input type="text" name="title" placeholder="Title">

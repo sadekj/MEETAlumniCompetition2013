@@ -1,20 +1,29 @@
+<%@page import="database.Database"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <html>
 <head>
 <%
 	boolean rCh = request.getParameter("rid") != null
-			&& request.getParameter("rid").equals("liB");
+	&& request.getParameter("rid").equals("liB");
 	String title = "This is to be changed to dynamic title from DB...";
 %>
-<title><%=title%></title>
 <%@include file="head.jsp"%>
+<script type="text/javascript" src="script/AJAXXMLFunction.js"></script>
+<title><%=title%></title>
 <link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
 	<%@include file="header.jsp"%>
 	<%
-		if (session.getAttribute("user") != null) {
+		if(!Database.getInstance().isCountdownDone(1)){
+	%>
+	<script type="text/javascript">
+		document.location.href="countdown.jsp?id=1";
+		</script>
+	<%
+		}
+			if (session.getAttribute("user") != null) {
 	%>
 	<section id="mainR">
 		<h1

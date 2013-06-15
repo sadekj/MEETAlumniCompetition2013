@@ -171,6 +171,34 @@ public class Database {
 		return false;
 	}
 
+	public boolean openRound(Round round) {
+		String query = "UPDATE `round` SET `status`='Opened' WHERE `id`=?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, round.getId());
+			ps.execute();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean closeRound(Round round) {
+		String query = "UPDATE `round` SET `status`='Closed' WHERE `id`=?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, round.getId());
+			ps.execute();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	public Team createTeam(Team team) {
 		String query = "INSERT INTO team(`name`,`description`,`status`)VALUES(?,?)";
 		PreparedStatement ps;
@@ -623,6 +651,7 @@ public class Database {
 		}
 		return countdown;
 	}
+	
 
 	public Countdown getCountdown(int id) {
 		String query = "SELECT * FROM countdowns WHERE id = ?";
@@ -638,6 +667,20 @@ public class Database {
 			e.printStackTrace();
 		}
 		return countdown;
+	}
+	public boolean isCountdownDone(int id) {
+		String query = "SELECT * FROM `countdowns` WHERE `id`=? AND (`enddate`>CURDATE() OR (`enddate` = CURDATE() AND `endtime`>NOW()))";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next())
+				return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
 	}
 
 	public ArrayList<User> getMembers(Team team) {

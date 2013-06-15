@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="UTF-8"%>
 <%@ page import="database.Database"%>
@@ -9,7 +10,12 @@
 <%@ include file="head.jsp"%>
 <link rel="stylesheet" type="text/css" href="county/css/county.css" />
 <script src="county/js/county.js" type="text/javascript"></script>
-<% Countdown countdown = Database.getInstance().getCountdown(1); %>
+<% 
+try{
+	int countdownid = Integer.parseInt(request.getParameter("id"));
+	Countdown countdown = Database.getInstance().getCountdown(countdownid);
+
+%>
 <script type="text/javascript">
 	$(function() {
 		$('#count-down').county({
@@ -29,6 +35,13 @@
 <title>Insert title here</title>
 </head>
 <body>
+<%@ include file = "header.jsp" %>
+<div class="container">
 	<div id="count-down"></div>
+	<%
+	}catch(Exception e){%>
+	Invalid Count down
+<% }%>
+</div>
 </body>
 </html>
