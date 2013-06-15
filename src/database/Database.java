@@ -193,19 +193,25 @@ public class Database {
 		return team;
 	}
 
-	public boolean createGroup(Group group) {
+	public Group createGroup(Group group) {
 		String query = "INSERT INTO `group`(`name`,`description`)VALUES(?,?)";
 		PreparedStatement ps;
+		ResultSet generatedKeys;
 		try {
-			ps = connection.prepareStatement(query);
+			ps = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 			ps.setString(1, group.getName());
 			ps.setString(2, group.getDescription());
 			ps.execute();
-			return true;
+			generatedKeys = ps.getGeneratedKeys();
+			if (generatedKeys.next())
+				group.setId(generatedKeys.getInt(1));
+			else
+				throw new SQLException("Creating score failed, no generated key obtained.");
+			return group;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return false;
+		return group;
 	}
 
 	public boolean createRound(Round round) {
@@ -256,6 +262,21 @@ public class Database {
 
 	public boolean addUserToGroup(User user, Group group) {
 		String query = "INSERT INTO user_group(`userid`,`groupid`)VALUES(?,?)";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, user.getId());
+			ps.setInt(2, group.getId());
+			ps.execute();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean removeUserFromGroup(User user, Group group) {
+		String query = "DELETE FROM `user_group` WHERE `userid`=? AND `groupid`=?";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
@@ -417,6 +438,21 @@ public class Database {
 			e.printStackTrace();
 		}
 		return teams;
+	}
+
+	public ArrayList<Group> getAllGroups() {
+		String query = "SELECT * FROM `group`";
+		PreparedStatement ps;
+		ArrayList<Group> groups = new ArrayList<Group>();
+		try {
+			ps = connection.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+				groups.add(new Group(rs.getInt("id"), rs.getString("name"), rs.getString("description")));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return groups;
 	}
 
 	public ArrayList<Round> getAllRounds() {
@@ -605,7 +641,7 @@ public class Database {
 	}
 
 	public ArrayList<User> getMembers(Team team) {
-		String query = "SELECT * from `user` WHERE `id` IN(SELECT `userid` FROM `user_team` WHERE `teamid` = ?) ";
+		String query = "SELECT * from `user` WHERE `id` IN(SELECT `userid` FROM `user_team` WHERE `teamid` = ?) AND `status`='Approved'";
 		PreparedStatement ps;
 		ArrayList<User> users = new ArrayList<User>();
 		try {
@@ -621,12 +657,46 @@ public class Database {
 		return users;
 	}
 
-	public ArrayList<User> getUsersNotInTeams() {
-		String query = "SELECT * from `user` WHERE `id` NOT IN(SELECT `userid` from `user_team`)";
+	public ArrayList<User> getAllUsersInGroup(Group group) {
+		String query = "SELECT * from `user` WHERE `id` IN(SELECT `userid` FROM `user_group` WHERE `groupid` = ?) AND `status`='Approved'";
 		PreparedStatement ps;
 		ArrayList<User> users = new ArrayList<User>();
 		try {
 			ps = connection.prepareStatement(query);
+			ps.setInt(1, group.getId());
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				users.add(new User(rs.getInt("id"), rs.getString("fname"), rs.getString("lname"), rs.getString("username"), "", rs.getString("img"), rs.getString("status"), rs.getString("email")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+
+	public ArrayList<User> getUsersNotInTeams() {
+		String query = "SELECT * from `user` WHERE `id` NOT IN(SELECT `userid` from `user_team`) AND `status`='Approved'";
+		PreparedStatement ps;
+		ArrayList<User> users = new ArrayList<User>();
+		try {
+			ps = connection.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				users.add(new User(rs.getInt("id"), rs.getString("fname"), rs.getString("lname"), rs.getString("username"), "", rs.getString("img"), rs.getString("status"), rs.getString("email")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+
+	public ArrayList<User> getUsersNotInGroup(Group group) {
+		String query = "SELECT * from `user` WHERE `id` NOT IN(SELECT `userid` from `user_group` WHERE `groupid`=?) AND `status`='Approved'";
+		PreparedStatement ps;
+		ArrayList<User> users = new ArrayList<User>();
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, group.getId());
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				users.add(new User(rs.getInt("id"), rs.getString("fname"), rs.getString("lname"), rs.getString("username"), "", rs.getString("img"), rs.getString("status"), rs.getString("email")));

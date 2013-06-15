@@ -11,20 +11,19 @@ import javax.servlet.http.HttpSession;
 
 import database.Database;
 import entities.Group;
-import entities.Team;
 import entities.User;
 
 /**
- * Servlet implementation class RemoveUserFromTeam
+ * Servlet implementation class CreateGroup
  */
-@WebServlet("/RemoveUserFromTeam")
-public class RemoveUserFromTeam extends HttpServlet {
+@WebServlet("/CreateGroup")
+public class CreateGroup extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public RemoveUserFromTeam() {
+	public CreateGroup() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -34,7 +33,7 @@ public class RemoveUserFromTeam extends HttpServlet {
 	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
+		// TODO Auto-generated method stub
 	}
 
 	/**
@@ -45,29 +44,19 @@ public class RemoveUserFromTeam extends HttpServlet {
 		HttpSession session = request.getSession();
 		if (session.getAttribute("user") != null) {
 			try {
+				Group admin = Database.getInstance().getGroup(1);
 				User creator = (User) session.getAttribute("user");
-				Group staff = Database.getInstance().getGroup(2);
-				String strteamid = request.getParameter("teamid");
-				String struserid = request.getParameter("userid");
-				int teamid = Integer.parseInt(strteamid);
-				int userid = Integer.parseInt(struserid);
-				if (creator.getId() == userid || Database.getInstance().isInGroup(creator, staff)) {
-					User user = Database.getInstance().getUser(userid);
-					Team team = Database.getInstance().getTeam(teamid);
-					if (Database.getInstance().isInTeam(user)) {
-						if (Database.getInstance().removeUserFromTeam(user, team)) {
-							response.getOutputStream().print("User Removed");
-						} else {
-							response.getOutputStream().print("Removig has failed");
-						}
-					} else {
-						response.getOutputStream().print("User is already not in this team");
-					}
+				if (Database.getInstance().isInGroup(creator, admin)) {
+					String groupName = request.getParameter("name");
+					String groupDescription = request.getParameter("description");
+					Group group = new Group(0, groupName, groupDescription);
+					Database.getInstance().createGroup(group);
+					response.sendRedirect("group.jsp?id=" + group.getId());
 				} else {
-					response.getOutputStream().print("You are not allowed to do this action");
+					response.getOutputStream().print("You are not admin!");
 				}
 			} catch (Exception e) {
-				response.getOutputStream().print("Error, please contact your Administrator!");
+				response.getOutputStream().print("Somthing went wrong contact your Administrator!");
 			}
 		} else {
 			response.getOutputStream().print("You are not logged in!");

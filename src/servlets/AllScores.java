@@ -51,7 +51,7 @@ public class AllScores extends HttpServlet {
 		int id = 0;
 		try {
 			if (teamid == null || teamid.equals("")) {
-				teams = Database.getInstance().getAllTeams();
+				teams = Database.getInstance().getAllApprovedTeams();
 			} else {
 				id = Integer.parseInt(teamid);
 				teams.add(Database.getInstance().getTeam(id));

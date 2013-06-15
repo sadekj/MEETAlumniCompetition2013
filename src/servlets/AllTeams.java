@@ -62,10 +62,10 @@ public class AllTeams extends HttpServlet {
 			response.getOutputStream().println("<tbody>");
 			ArrayList<Team> teams;
 			String function;
-			if (status.equals("Pending")) {
+			if (status.equals("Pending") && allowed) {
 				teams = Database.getInstance().getAllPendingTeams();
 				function = "approveTeam";
-			} else if (status.equals("Disabled")) {
+			} else if (status.equals("Disabled") && allowed) {
 				teams = Database.getInstance().getAllDisabledTeams();
 				function = "enableTeam";
 			} else {
