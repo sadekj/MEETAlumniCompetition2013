@@ -18,13 +18,13 @@ import entities.User;
  * Servlet implementation class CreatTeam
  */
 @WebServlet("/CreatTeam")
-public class CreatTeam extends HttpServlet {
+public class CreateTeam extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public CreatTeam() {
+	public CreateTeam() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
