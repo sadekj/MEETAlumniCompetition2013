@@ -24,6 +24,7 @@
 
 #sB {
 	height: 300px;
+	width:396px;
 	background-color: whitesmoke;
 	background: rgba(0, 0, 0, 0.6);
 	-webkit-border-radius: 4px;
@@ -49,8 +50,8 @@
 
 .o,.vA,.un {
 	display: table-cell;
+	width: 198px;
 	height: 75px;
-	width: 187px;
 	vertical-align: middle;
 	-webkit-transition: all 600ms ease;
 	-moz-transition: all 600ms ease;

@@ -1,3 +1,4 @@
+<%@page import="entities.Countdown"%>
 <%@page import="database.Database"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -10,19 +11,45 @@
 %>
 <%@include file="head.jsp"%>
 <script type="text/javascript" src="script/AJAXXMLFunction.js"></script>
-<title><%=title%></title>
 <link rel="stylesheet" type="text/css" href="css/index.css">
-</head>
-<body>
-	<%@include file="header.jsp"%>
-	<%
-		if(!Database.getInstance().isCountdownDone(1)){
+<link rel="stylesheet" type="text/css" href="county/css/county.css" />
+<script src="county/js/county.js" type="text/javascript"></script>
+<style>
+#count-down {
+	background-color: rgba(77, 100, 255, 0.5);
+}
+</style>
+<% if(Database.getInstance().isCountdownDone(1)){
 	%>
 	<script type="text/javascript">
 		document.location.href="countdown.jsp?id=1";
 		</script>
 	<%
 		}
+Countdown countdown = Database.getInstance().getCountdown(1);%>
+<script type="text/javascript">
+	$(function() {
+		$('#count-down').county({
+			endDateTime : new Date('<%= countdown.getEndDate()%> <%= countdown.getEndTime() %>'),
+			reflection : true,
+			animation : 'scroll',
+			theme : 'blue'
+		});
+
+	});
+</script>
+<%String message="";
+if(request.getParameter("message")!=null){
+message = request.getParameter("message");
+}
+
+%>
+<title><%=title%></title>
+</head>
+<body>
+	<%@include file="header.jsp"%>
+	<%
+		
 			if (session.getAttribute("user") != null) {
 	%>
 	<section id="mainR">
@@ -37,6 +64,8 @@
 		<h2 id="get">
 			GET <span id="started">STARTED!</span>
 		</h2>
+					<h3 style="text-align: center;"><%=message %></h3>
+		
 		<section id="sB">
 			<section id="oC">
 				<%
@@ -103,6 +132,7 @@
 				</section>
 			</section>
 		</section>
+			<div id="count-down"></div>
 	</section>
 	<%@include file="footer.jsp"%>
 	<%
