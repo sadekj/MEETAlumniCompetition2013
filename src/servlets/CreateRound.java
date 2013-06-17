@@ -52,7 +52,7 @@ public class CreateRound extends HttpServlet {
 					String description = request.getParameter("description");
 					Round round = new Round(0, title, description, "Closed");
 					if (Database.getInstance().createRound(round))
-						response.sendRedirect("rounds.jsp");
+						response.sendRedirect("rounds.jsp?header=t");
 					else
 						response.getOutputStream().print("Error while creating the round!");
 				} else {

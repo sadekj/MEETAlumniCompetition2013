@@ -8,19 +8,24 @@
 <html>
 <head>
 <%@ include file="head.jsp"%>
+<meta http-equiv="Content-Type" content="text/html; UTF-8">
 <script type="text/javascript" src="script/AJAXXMLFunction.js"></script>
 <title>Rounds</title>
 <script type="text/javascript">
 	$(function() {
-		$("form").css("display", "none");
+		$("#createRoundForm").css("display", "none");
 		$("#createRound").click(function() {
-			$("form").toggle("slow");
+			$("#createRoundForm").toggle("slow");
 		});
 	});
 </script>
 </head>
 <body>
+<%
+if (request.getParameter("header")!=null){
+%>
 	<%@ include file="header.jsp"%>
+	<% } %>
 	<div class="container">
 		<%
 			if (session.getAttribute("user") != null) {
@@ -51,7 +56,7 @@
 			}
 					if (allowed) {
 		%><a id="createRound" href="#">Create Round</a>
-		<form action="CreateRound" method="POST">
+		<form id="createRoundForm" action="CreateRound" method="POST">
 			<input type="text" name="title" placeholder="Title">
 			<textarea rows="5" cols="5" name="description">Description</textarea>
 			<input type="submit" value="Create">
@@ -70,5 +75,10 @@
 			}
 		%>
 	</div>
+	<%
+if (request.getParameter("header")!=null){
+%>
+	<%@ include file="footer.jsp"%>
+	<% } %>
 </body>
 </html>

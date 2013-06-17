@@ -17,7 +17,7 @@ import entities.User;
 /**
  * Servlet implementation class CreatTeam
  */
-@WebServlet("/CreatTeam")
+@WebServlet("/CreateTeam")
 public class CreateTeam extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

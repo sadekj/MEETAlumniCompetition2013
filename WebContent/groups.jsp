@@ -10,15 +10,19 @@
 <title>Rounds</title>
 <script type="text/javascript">
 	$(function() {
-		$("form").css("display", "none");
+		$("#createGroupForm").css("display", "none");
 		$("#createGroup").click(function() {
-			$("form").toggle("slow");
+			$("#createGroupForm").toggle("slow");
 		});
 	});
 </script>
 </head>
 <body>
+	<%
+if (request.getParameter("header")!=null){
+%>
 	<%@ include file="header.jsp"%>
+	<% } %>
 	<div class="container">
 		<%
 			if (session.getAttribute("user") != null) {
@@ -35,7 +39,7 @@
 					User user = (User) session.getAttribute("user");
 					if (Database.getInstance().isInGroup(user, admin)) {
 		%><a id="createGroup" href="#">Create Group</a>
-		<form action="CreateGroup" method="POST">
+		<form id="createGroupForm" action="CreateGroup" method="POST">
 			<input type="text" name="name" placeholder="Name">
 			<textarea rows="5" cols="5" name="description">Description</textarea>
 			<input type="submit" value="Create">
@@ -54,5 +58,10 @@
 			}
 		%>
 	</div>
+		<%
+if (request.getParameter("header")!=null){
+%>
+	<%@ include file="footer.jsp"%>
+	<% } %>
 </body>
 </html>

@@ -23,11 +23,16 @@
 </script>
 <body>
 <%@ include file="header.jsp" %>
+	<div class="container">
 <%
 		if (session.getAttribute("user") != null) {
 			if (request.getParameter("id") != null) {
 	try {
 		Round round = Database.getInstance().getRound(Integer.parseInt(request.getParameter("id")));
+		Group staff = Database.getInstance().getGroup(2);
+		User user = (User) session.getAttribute("user");
+		if(round.getStatus().equals("Opened") || Database.getInstance().isInGroup(user, staff)){
+			%><h5>Round is Open</h5><%
 		Countdown countdown = Database.getInstance().getCountdown(round);
 		int countdownid = 0;
 		if(countdown!=null)
@@ -39,7 +44,6 @@
 		</script>
 	<%
 		}%>
-	<div class="container">
 		<%
 					ArrayList<Post> posts = Database.getInstance().getAllPosts(round);
 					for(Post post : posts){
@@ -52,8 +56,7 @@
 		</div>
 		<%
 					}
-					Group staff = Database.getInstance().getGroup(2);
-					User user = (User) session.getAttribute("user");
+					
 					if (Database.getInstance().isInGroup(user, staff)) {
 		%><a id="createPost" href="#">Create Post</a>
 		<form action="CreatePost" method="POST">
@@ -64,6 +67,8 @@
 			<input type="submit" value="Create">
 		</form>
 		<%
+			}}else{
+				%><h1>Round is Closed</h1><%
 			}
 				} catch (Exception e) {
 					%>

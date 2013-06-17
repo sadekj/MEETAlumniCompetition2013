@@ -1,7 +1,7 @@
-<%@page import="entities.Countdown"%>
-<%@page import="database.Database"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="entities.Countdown"%>
+<%@page import="database.Database"%>
 <html>
 <head>
 <%
@@ -22,7 +22,7 @@
 <% if(Database.getInstance().isCountdownDone(1)){
 	%>
 	<script type="text/javascript">
-		document.location.href="countdown.jsp?id=1";
+		document.location.href="countover.jsp";
 		</script>
 	<%
 		}
