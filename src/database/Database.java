@@ -384,6 +384,22 @@ public class Database {
 		}
 		return user;
 	}
+	public Post getPost(int id) {
+		String query = "SELECT * FROM `post` WHERE `id`=?";
+		PreparedStatement ps;
+		Post post = null;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				post = new Post(rs.getInt("id"), rs.getString("title"), rs.getString("description"), Database.getInstance().getUser(rs.getInt("userid")), Database.getInstance().getRound(rs.getInt("roundid")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return post;
+	}
 
 	public Score getScore(int id) {
 		String query = "SELECT * FROM score WHERE `id`=?";
@@ -635,7 +651,19 @@ public class Database {
 		}
 		return false;
 	}
-
+	public boolean removePost(Post post) {
+		String query = "DELETE FROM `post` WHERE `id`= ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, post.getId());
+			ps.execute();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 	public Countdown getCountdown(Round round) {
 		String query = "SELECT * FROM countdowns WHERE id = (SELECT `countdownid` FROM `countdown_round` WHERE `roundid`=?)";
 		PreparedStatement ps;

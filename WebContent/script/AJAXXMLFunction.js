@@ -420,3 +420,30 @@ function updateCountdown() {
 			document.location.href = "index.jsp";
 	}
 }
+
+
+
+
+
+function removePost(postid) {
+	xhrequest = null;
+	try {
+		xhrequest = getXMLHttpRequest();
+	} catch (error) {
+		document.write("Cannot run AJAX on this browser!");
+	}
+	if (xhrequest != null) {
+		strURL = "RemovePost?id=" + postid;
+		xhrequest.onreadystatechange = updateRemovePostStatus;
+		xhrequest.open("POST", strURL, true);
+		xhrequest.send(null);
+	}
+}
+function updateRemovePostStatus() {
+	if (xhrequest.readyState == 4 && xhrequest.status == 200) {
+		var strResponse = xhrequest.responseText;
+		document.getElementById("updateRemovePostStatus").innerHTML = strResponse;
+		$("#updateRemovePostStatus").show("fast").delay(3000).hide("fast");
+		setTimeout("location.reload()", 4000);
+	}
+}
