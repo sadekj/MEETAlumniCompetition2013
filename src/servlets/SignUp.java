@@ -39,13 +39,14 @@ public class SignUp extends HttpServlet {
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String error = "";
+		if(!Database.getInstance().isCountdownDone(1)){
 		String firstname = request.getParameter("fname");
 		String lastname = request.getParameter("lname");
 		String email = request.getParameter("email");
 		String username = request.getParameter("username");
 		String password = request.getParameter("pass");
 		String repassword = request.getParameter("passC");
-		String error = "";
 		if (password.length() >= 6) {
 			if (password.equals(repassword)) {
 				User user = new User(0, firstname, lastname, username, password, "", "Pending", email);
@@ -62,9 +63,12 @@ public class SignUp extends HttpServlet {
 		} else {
 			error += "Password Length should be at least 6 charecters long";
 		}
+		}else{
+			error+= "Sorry you can't sign up, your are late!";
+		}
 		if (error.length() > 0)
-			response.sendRedirect("index.jsp?error=" + error);
+			response.sendRedirect("index.jsp?message=" + error);
 		else
-			response.sendRedirect("index.jsp?message=Thank You, Waiting the staff aproval so you can sign in!");
+			response.sendRedirect("index.jsp?message=Thank you, your registration is awaiting approval, in order to use the service!");
 	}
 }

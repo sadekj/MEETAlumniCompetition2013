@@ -47,7 +47,7 @@ public class Login extends HttpServlet {
 			session.setAttribute("user", user);	
 			response.sendRedirect("index.jsp");
 		}else{
-			response.sendRedirect("index.jsp?error=Wrong username and/or password! Or Your Account is not approved yet!");
+			response.sendRedirect("index.jsp?message=Wrong username and/or password! Or your registration is not approved yet!");
 		}
 	}
 

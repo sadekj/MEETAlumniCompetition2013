@@ -9,7 +9,7 @@
 					boolean sessionCh = session.getAttribute("user") != null;
 					if (sessionCh) {
 				%>
-				<li id="rounds"><a href="rounds.jsp">Rounds</a></li>
+				<li id="rounds"><a href="rounds.jsp?header=t">Rounds</a></li>
 				<%
 					}
 				%>

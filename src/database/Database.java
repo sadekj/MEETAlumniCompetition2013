@@ -13,7 +13,6 @@ import entities.Post;
 import entities.Round;
 import entities.Score;
 import entities.Team;
-import entities.Title;
 import entities.User;
 
 public class Database {
@@ -384,23 +383,6 @@ public class Database {
 			e.printStackTrace();
 		}
 		return user;
-	}
-	
-	public Title getTitle(int id) {
-		String query = "SELECT * FROM titles WHERE `id`=?";
-		PreparedStatement ps;
-		Title title = null;
-		try {
-			ps = connection.prepareStatement(query);
-			ps.setInt(1, id);
-			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
-				title = new Title(rs.getInt("id"), rs.getString("title"), rs.getString("description"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return title;
 	}
 
 	public Score getScore(int id) {

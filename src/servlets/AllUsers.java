@@ -78,7 +78,8 @@ public class AllUsers extends HttpServlet {
 				response.getOutputStream().println("<td>" + user.getfName() + "</td>");
 				response.getOutputStream().println("<td>" + user.getlName() + "</td>");
 				response.getOutputStream().println("<td>" + user.getEmail() + "</td>");
-				response.getOutputStream().println("<td><button onclick='" + function + "(" + user.getId() + ")'>" + function + "</button></td>");
+				if (allowed)
+					response.getOutputStream().println("<td><button onclick='" + function + "(" + user.getId() + ")'>" + function + "</button></td>");
 				response.getOutputStream().println("</tr>");
 			}
 			response.getOutputStream().println("</tbody>");
