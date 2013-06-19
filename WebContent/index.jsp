@@ -41,10 +41,10 @@
 	String msg = "";
 	int mId;
 	if (request.getParameter("message") != null) {
-		System.out.println(request.getParameter("message"));
 		mId = Integer.parseInt(request.getParameter("message"));
-		System.out.println(mId);
-		msg = Database.getInstance().getTitle(mId).getDesc();
+		if (mId == 2) {
+			msg = "Login failed; entered username and/or password incorrect, or account hasn't been approved yet.";
+		}
 	}
 %>
 <title><%=title%></title>
@@ -176,11 +176,39 @@
 	}
 %>
 <%
-	if (request.getParameter("message") == null) {
+	if (msg == "") {
 %>
 <script>
 	$("#msg").hide();
 </script>
+<%
+	boolean cO = Database.getInstance().isCountdownDone(1);
+		if (cO == true && rCh) {
+%>
+<script>
+	$("#count-down").hide();
+	$("#signUp").hide();
+	$("#vA1").removeAttr("onclick");
+	$("#signIn").show();
+	$("#login").html('<a href="index.jsp?rid=liB">Login</a>');
+	$("#sB").css("height", "180px");
+</script>
+<style>
+#vA1:hover {
+	text-decoration: line-through;
+	color: rgb(100, 100, 100);
+	background-color: rgba(0, 0, 0, 0);
+}
+</style>
+<%
+	} else if (cO == true) {
+%>
+<script>
+	window.location = "index.jsp?rid=liB";
+</script>
+<%
+	}
+%>
 <%
 	}
 %>
