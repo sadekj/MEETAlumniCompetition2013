@@ -6,8 +6,10 @@
 <head>
 <%
 	boolean rCh = request.getParameter("rid") != null
-	&& request.getParameter("rid").equals("liB");
-	String title = "This is to be changed to dynamic title from DB...";
+			&& request.getParameter("rid").equals("liB");
+	boolean cCh = request.getParameter("co") != null
+			&& request.getParameter("co").equals("t");
+	String title = Database.getInstance().getTitle(1).getTitle();
 %>
 <%@include file="head.jsp"%>
 <script type="text/javascript" src="script/AJAXXMLFunction.js"></script>
@@ -19,42 +21,38 @@
 	background-color: rgba(77, 100, 255, 0.5);
 }
 </style>
-<% if(Database.getInstance().isCountdownDone(1)){
-	%>
-	<script type="text/javascript">
-		document.location.href="countover.jsp";
-		</script>
-	<%
-		}
-Countdown countdown = Database.getInstance().getCountdown(1);
-if(countdown != null){
+<%
+	Countdown countdown = Database.getInstance().getCountdown(1);
+	if (countdown != null) {
 %>
 <script type="text/javascript">
 	$(function() {
 		$('#count-down').county({
-			endDateTime : new Date('<%= countdown.getEndDate()%> <%= countdown.getEndTime() %>'),
-			reflection : true,
-			animation : 'scroll',
-			theme : 'blue'
-		});
+			endDateTime : new Date("<%=countdown.getEndDate()%> <%=countdown.getEndTime()%>"),
+							reflection : true,
+							animation : 'scroll',
+							theme : 'blue'
+						});
 
 	});
 </script>
 <%
-}
-String message="";
-if(request.getParameter("message")!=null){
-message = request.getParameter("message");
-}
-
+	}
+	String msg = "";
+	int mId;
+	if (request.getParameter("message") != null) {
+		System.out.println(request.getParameter("message"));
+		mId = Integer.parseInt(request.getParameter("message"));
+		System.out.println(mId);
+		msg = Database.getInstance().getTitle(mId).getDesc();
+	}
 %>
 <title><%=title%></title>
 </head>
 <body>
 	<%@include file="header.jsp"%>
 	<%
-		
-			if (session.getAttribute("user") != null) {
+		if (session.getAttribute("user") != null) {
 	%>
 	<section id="mainR">
 		<h1
@@ -65,11 +63,10 @@ message = request.getParameter("message");
 		} else {
 	%>
 	<section id="mainL">
+		<h4 id="msg"><%=msg%></h4>
 		<h2 id="get">
 			GET <span id="started">STARTED!</span>
 		</h2>
-					<h3 style="text-align: center;"><%=message %></h3>
-		
 		<section id="sB">
 			<section id="oC">
 				<%
@@ -136,7 +133,7 @@ message = request.getParameter("message");
 				</section>
 			</section>
 		</section>
-			<div id="count-down"></div>
+		<div id="count-down"></div>
 	</section>
 	<%@include file="footer.jsp"%>
 	<%
@@ -175,6 +172,15 @@ message = request.getParameter("message");
 	}
 %>
 <script src="script/index.js"></script>
+<%
+	}
+%>
+<%
+	if (request.getParameter("message") == null) {
+%>
+<script>
+	$("#msg").hide();
+</script>
 <%
 	}
 %>
