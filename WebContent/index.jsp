@@ -26,7 +26,9 @@
 		</script>
 	<%
 		}
-Countdown countdown = Database.getInstance().getCountdown(1);%>
+Countdown countdown = Database.getInstance().getCountdown(1);
+if(countdown != null){
+%>
 <script type="text/javascript">
 	$(function() {
 		$('#count-down').county({
@@ -38,7 +40,9 @@ Countdown countdown = Database.getInstance().getCountdown(1);%>
 
 	});
 </script>
-<%String message="";
+<%
+}
+String message="";
 if(request.getParameter("message")!=null){
 message = request.getParameter("message");
 }

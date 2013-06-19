@@ -5,9 +5,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; UTF-8">
 <script type="text/javascript" src="script/AJAXXMLFunction.js"></script>
-<script type="text/javascript">
-
-</script>
 <title>Pending Users</title>
 </head>
 <body onload="loadListTeam('<%= request.getParameter("status")%>')">
