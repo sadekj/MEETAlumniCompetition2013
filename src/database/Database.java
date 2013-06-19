@@ -13,6 +13,7 @@ import entities.Post;
 import entities.Round;
 import entities.Score;
 import entities.Team;
+import entities.Title;
 import entities.User;
 
 public class Database {
@@ -820,5 +821,22 @@ public class Database {
 		// System.out.println(Database.getInstance().getScore(1).getValue());
 		Team team = Database.getInstance().getTeam(user);
 		System.out.print(team.getName());
+	}
+	
+	public Title getTitle(int id) {
+		String query = "SELECT * FROM titles WHERE `id`=?";
+		PreparedStatement ps;
+		Title title = null;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				title = new Title(rs.getInt("id"), rs.getString("title"), rs.getString("description"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return title;
 	}
 }
