@@ -16,11 +16,11 @@
 }
 
 .window,.window .innerWindow {
-	width: 350px;
+	width: 375px;
 	margin: 5px;
 }
 .window,.window div {
-	width: 350px;
+	width: 375px;
 }
 </style>
 </head>
