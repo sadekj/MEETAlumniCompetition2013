@@ -10,6 +10,7 @@
 	boolean cCh = request.getParameter("co") != null
 			&& request.getParameter("co").equals("t");
 	boolean mCh = request.getParameter("e") != null;
+	boolean cO = Database.getInstance().isCountdownDone(1);
 	String title = Database.getInstance().getTitle(1).getTitle();
 %>
 <%@include file="head.jsp"%>
@@ -183,8 +184,7 @@
 	$("#msg").hide();
 </script>
 <%
-	boolean cO = Database.getInstance().isCountdownDone(1);
-		if (cO == true && rCh) {
+	if (cO == true && rCh) {
 %>
 <script>
 	$("#count-down").hide();
@@ -209,7 +209,7 @@
 </script>
 <%
 	}
-	} else {
+	} else if (cO) {
 %>
 <script>
 	$("#count-down").hide();
