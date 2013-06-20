@@ -11,6 +11,8 @@
 <%@ include file="../header.jsp" %>
 <div class="container">
 <h1>500: Internal Error!</h1>
+<h5>We're currently working on fixing this. Please be patient.</h5>
+<h6>Report this <a href="mailto:support@meetcp.mygbiz.com">here</a>.</h6>
 </div>
 <%@ include file="../footer.jsp" %>
 </body>

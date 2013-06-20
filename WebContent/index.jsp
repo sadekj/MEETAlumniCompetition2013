@@ -9,6 +9,7 @@
 			&& request.getParameter("rid").equals("liB");
 	boolean cCh = request.getParameter("co") != null
 			&& request.getParameter("co").equals("t");
+	boolean mCh = request.getParameter("e") != null;
 	String title = Database.getInstance().getTitle(1).getTitle();
 %>
 <%@include file="head.jsp"%>
@@ -40,8 +41,8 @@
 	}
 	String msg = "";
 	int mId;
-	if (request.getParameter("message") != null) {
-		mId = Integer.parseInt(request.getParameter("message"));
+	if (mCh) {
+		mId = Integer.parseInt(request.getParameter("e"));
 		if (mId == 2) {
 			msg = "Login failed; entered username and/or password incorrect, or account hasn't been approved yet.";
 		}
@@ -201,15 +202,35 @@
 }
 </style>
 <%
-	} else if (cO == true) {
+	} else if (cO == true && mCh) {
 %>
 <script>
 	window.location = "index.jsp?rid=liB";
 </script>
 <%
 	}
+	} else {
 %>
+<script>
+	$("#count-down").hide();
+	$("#signUp").hide();
+	$("#vA1").removeAttr("onclick");
+	$("#vA1").removeClass("un").addClass("un");
+	$("#vA2").removeClass("un");
+	$("#oR").css("background-color", "#E06040");
+	$("#oL").css("background-color", "transparent");
+	$("#signIn").show();
+	$("#login").html('<a href="index.jsp?rid=liB">Login</a>');
+	$("#sB").css("height", "180px");
+</script>
+<style>
+#vA1:hover {
+	text-decoration: line-through;
+	color: rgb(100, 100, 100);
+	background-color: rgba(0, 0, 0, 0);
+}
+</style>
 <%
-	}
+			}
 %>
 </html>
