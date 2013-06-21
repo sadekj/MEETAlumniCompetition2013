@@ -12,6 +12,7 @@
 	boolean mCh = request.getParameter("e") != null;
 	boolean cO = Database.getInstance().isCountdownDone(1);
 	String title = Database.getInstance().getTitle(1).getTitle();
+	System.out.println(cO);
 %>
 <%@include file="head.jsp"%>
 <script type="text/javascript" src="script/AJAXXMLFunction.js"></script>
@@ -180,7 +181,7 @@
 <%
 	if (msg == "") {
 %>
-<script>
+<script type="text/javascript">
 	$("#msg").hide();
 </script>
 <%
@@ -208,10 +209,9 @@
 	window.location = "index.jsp?rid=liB";
 </script>
 <%
-	}
 	} else if (cO) {
 %>
-<script>
+<script type="text/javascript">
 	$("#count-down").hide();
 	$("#signUp").hide();
 	$("#vA1").removeAttr("onclick");
@@ -231,6 +231,29 @@
 }
 </style>
 <%
-			}
+	}
+	} else if (cO) {
+%>
+<script type="text/javascript">
+	$("#count-down").hide();
+	$("#signUp").hide();
+	$("#vA1").removeAttr("onclick");
+	$("#vA1").removeClass("un").addClass("un");
+	$("#vA2").removeClass("un");
+	$("#oR").css("background-color", "#E06040");
+	$("#oL").css("background-color", "transparent");
+	$("#signIn").show();
+	$("#login").html('<a href="index.jsp?rid=liB">Login</a>');
+	$("#sB").css("height", "180px");
+</script>
+<style>
+#vA1:hover {
+	text-decoration: line-through;
+	color: rgb(100, 100, 100);
+	background-color: rgba(0, 0, 0, 0);
+}
+</style>
+<%
+	}
 %>
 </html>
