@@ -45,6 +45,8 @@ public class UsersNotInGroup extends HttpServlet {
 		HttpSession session = request.getSession();
 		if (session.getAttribute("user") != null) {
 			try {
+				User creator = (User) session.getAttribute("user");
+				Group staff = Database.getInstance().getGroup(2);
 				String strgroupid = request.getParameter("id");
 				int groupid = Integer.parseInt(strgroupid);
 				response.getOutputStream().println("<table class='tablesorter' border=1>");
@@ -64,7 +66,9 @@ public class UsersNotInGroup extends HttpServlet {
 					response.getOutputStream().println("<td>" + user.getfName() + "</td>");
 					response.getOutputStream().println("<td>" + user.getlName() + "</td>");
 					response.getOutputStream().println("<td>" + user.getEmail() + "</td>");
+					if (Database.getInstance().isInGroup(creator, staff)) {
 					response.getOutputStream().println("<td><button onclick='addToGroup(" + groupid + "," + user.getId() + ")'>Add</button></td>");
+					}
 					response.getOutputStream().println("</tr>");
 				}
 				response.getOutputStream().println("</tbody>");
