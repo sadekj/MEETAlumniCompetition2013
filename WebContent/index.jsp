@@ -12,6 +12,7 @@
 	boolean mCh = request.getParameter("e") != null;
 	boolean cO = Database.getInstance().isCountdownDone(1);
 	String title = Database.getInstance().getTitle(1).getTitle();
+	System.out.println(cO);
 %>
 <%@include file="head.jsp"%>
 <script type="text/javascript" src="script/AJAXXMLFunction.js"></script>
@@ -43,9 +44,28 @@
 	String msg = "";
 	int mId;
 	if (mCh) {
+		try{
 		mId = Integer.parseInt(request.getParameter("e"));
-		if (mId == 2) {
+		} catch(NumberFormatException e) {
+			e.printStackTrace();
+			mId = 666;
+		}
+		if (mId == 0) {
+			msg = "Thank you, your registration is awaiting approval. Check back later!";
+		} else if (mId == 1) {
+			msg = "Sign up failed.";
+		} else if (mId == 2) {
 			msg = "Login failed; entered username and/or password incorrect, or account hasn't been approved yet.";
+		} else if (mId == 3) {
+			msg = "Username and/or email already taken.";
+		} else if (mId == 4) {
+			msg = "Passwords don't match.";
+		} else if (mId == 5) {
+			msg = "Password must be 6-20 characters long.";
+		} else if (mId == 6) {
+			msg = "Sorry, Sign Up closed.";
+		} else if (mId == 666) {
+			msg = "Are you trying to crash this? Nice try, lol.";
 		}
 	}
 %>
@@ -180,7 +200,7 @@
 <%
 	if (msg == "") {
 %>
-<script>
+<script type="text/javascript">
 	$("#msg").hide();
 </script>
 <%
@@ -208,10 +228,9 @@
 	window.location = "index.jsp?rid=liB";
 </script>
 <%
-	}
 	} else if (cO) {
 %>
-<script>
+<script type="text/javascript">
 	$("#count-down").hide();
 	$("#signUp").hide();
 	$("#vA1").removeAttr("onclick");
@@ -231,6 +250,29 @@
 }
 </style>
 <%
-			}
+	}
+	} else if (cO) {
+%>
+<script type="text/javascript">
+	$("#count-down").hide();
+	$("#signUp").hide();
+	$("#vA1").removeAttr("onclick");
+	$("#vA1").removeClass("un").addClass("un");
+	$("#vA2").removeClass("un");
+	$("#oR").css("background-color", "#E06040");
+	$("#oL").css("background-color", "transparent");
+	$("#signIn").show();
+	$("#login").html('<a href="index.jsp?rid=liB">Login</a>');
+	$("#sB").css("height", "180px");
+</script>
+<style>
+#vA1:hover {
+	text-decoration: line-through;
+	color: rgb(100, 100, 100);
+	background-color: rgba(0, 0, 0, 0);
+}
+</style>
+<%
+	}
 %>
 </html>
