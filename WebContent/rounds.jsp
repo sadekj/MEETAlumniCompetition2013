@@ -38,8 +38,9 @@ if (request.getParameter("header")!=null){
 					ArrayList<Round> rounds = Database.getInstance().getAllRounds();
 					for (Round round : rounds) {
 		%>
-		<div>
-			<a href="round.jsp?id=<%=round.getId()%>"><%=round.getTitle()%></a>
+		<div class="hero-unit">
+			<h1><a href="round.jsp?id=<%=round.getId()%>"><%=round.getTitle()%></a></h1>
+			<p><%= round.getDescription()%></p>
 			<%
 				if (round.getStatus().equals("Closed")) {
 			%>
@@ -50,6 +51,11 @@ if (request.getParameter("header")!=null){
 			<button onclick="closeRound(<%=round.getId()%>)">Close</button>
 			<%
 				}
+			if(allowed){
+				%>
+				<a href="updateround.jsp?id=<%=round.getId()%>">Edit</a>
+				<%
+			}
 			%>
 		</div>
 		<%

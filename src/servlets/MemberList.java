@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import database.Database;
+import entities.Group;
 import entities.Team;
 import entities.User;
 
@@ -45,6 +46,8 @@ public class MemberList extends HttpServlet {
 		HttpSession session = request.getSession();
 		if (session.getAttribute("user") != null) {
 			try {
+				User creator = (User) session.getAttribute("user");
+				Group staff = Database.getInstance().getGroup(2);
 				String strteamid = request.getParameter("id");
 				int teamid = Integer.parseInt(strteamid);
 				response.getOutputStream().println("<table id='myTable' class='tablesorter' border=1>");
@@ -64,7 +67,9 @@ public class MemberList extends HttpServlet {
 					response.getOutputStream().println("<td>" + user.getfName() + "</td>");
 					response.getOutputStream().println("<td>" + user.getlName() + "</td>");
 					response.getOutputStream().println("<td>" + user.getEmail() + "</td>");
-					response.getOutputStream().println("<td><button onclick='removeFromTeam("+teamid+"," + user.getId() + ")'>Remove</button></td>");
+					if (user.getId() == creator.getId() || Database.getInstance().isInGroup(creator, staff)) {
+						response.getOutputStream().println("<td><button onclick='removeFromTeam(" + teamid + "," + user.getId() + ")'>Remove</button></td>");
+					}
 					response.getOutputStream().println("</tr>");
 				}
 				response.getOutputStream().println("</tbody>");

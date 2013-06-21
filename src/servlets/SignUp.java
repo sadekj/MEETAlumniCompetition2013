@@ -39,7 +39,7 @@ public class SignUp extends HttpServlet {
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String error = "";
+		int error=0;
 		if(!Database.getInstance().isCountdownDone(1)){
 		String firstname = request.getParameter("fname");
 		String lastname = request.getParameter("lname");
@@ -53,22 +53,22 @@ public class SignUp extends HttpServlet {
 				if (Database.getInstance().isValid(user)) {
 					boolean success = Database.getInstance().signup(user);
 					if (!success)
-						error += "Sign up Failed";
+						error = 1;//"Sign up Failed";
 				}else{
-					error = "Username and/or password is taken.";
+					error = 3;//"Username and/or email is taken.";
 				}
 			} else {
-				error += "Passwords don't match.";
+				error = 4;// "Passwords don't match.";
 			}
 		} else {
-			error += "Password Length should be at least 6 charecters long";
+			error = 5;// "Password Length should be at least 6 charecters long";
 		}
 		}else{
-			error+= "Sorry you can't sign up, your are late!";
+			error = 6;// "Sorry you can't sign up, your are late!";
 		}
-		if (error.length() > 0)
-			response.sendRedirect("index.jsp?message=" + error);
+		if (error > 0)
+			response.sendRedirect("index.jsp?e=" + error);
 		else
-			response.sendRedirect("index.jsp?message=Thank you, your registration is awaiting approval, in order to use the service!");
+			response.sendRedirect("index.jsp?e=0");//Thank you, your registration is awaiting approval, in order to use the service!
 	}
 }

@@ -62,8 +62,16 @@
 		boolean allowed = Database.getInstance().isInGroup(user, staff);
 		if(round.getStatus().equals("Opened") || allowed){
 	%><div id="updateRemovePostStatus" class="navbar-fixed-top" >
-	</div><%
-			%><h5>Round is Open</h5><%
+	</div>
+	<div class="hero-unit">
+	<h1><%=round.getTitle() %></h1>
+	<h5><%=round.getDescription() %></h5>
+	<%
+	if(round.getStatus().equals("Opened")){
+			%><h6 class="alert alert-success">Round is Open</h6><%
+			}else{
+				%><h6 class="alert alert-error">Round is Closed</h6><%
+			}
 		Countdown countdown = Database.getInstance().getCountdown(round);
 		int countdownid = 0;
 		if(countdown!=null)
@@ -79,9 +87,9 @@
 					ArrayList<Post> posts = Database.getInstance().getAllPosts(round);
 					for(Post post : posts){
 						%>
-		<div>
+		<div class="well">
 		<% if(allowed){%>
-		<a href="#" onclick="removePost(<%= post.getId() %>)">Delete</a>
+		<a href="#" class="btn btn-danger" onclick="removePost(<%= post.getId() %>)">Delete</a>
 		<% }%>
 			<h2><%= post.getTitle() %></h2>
 			<p>
@@ -102,7 +110,7 @@
 		</form>
 		<%
 			}}else{
-				%><h1>Round is Closed</h1><%
+				%><h1 class="alert alert-error">Round is Closed</h1><%
 			}
 				} catch (Exception e) {
 					%>
@@ -120,6 +128,7 @@
 		<%
 		}
 	%>
+	</div>
 	</div>
 </body>
 </html>

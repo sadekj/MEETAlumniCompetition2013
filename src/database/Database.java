@@ -201,7 +201,7 @@ public class Database {
 	}
 
 	public Team createTeam(Team team) {
-		String query = "INSERT INTO team(`name`,`description`,`status`)VALUES(?,?)";
+		String query = "INSERT INTO team(`name`,`description`,`status`)VALUES(?,?,?)";
 		PreparedStatement ps;
 		ResultSet generatedKeys;
 		try {
@@ -259,6 +259,22 @@ public class Database {
 		return false;
 	}
 
+	public boolean updateRound(Round round) {
+		String query = "UPDATE `round` SET `title`=?, `description`=? WHERE `id`=?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, round.getTitle());
+			ps.setString(2, round.getDescription());
+			ps.setInt(3, round.getId());
+			ps.execute();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	public boolean addUserToTeam(User user, Team team) {
 		String query = "INSERT INTO user_team(`userid`,`teamid`)VALUES(?,?)";
 		PreparedStatement ps;
@@ -576,7 +592,7 @@ public class Database {
 	}
 
 	public ArrayList<Team> getAllPendingTeams() {
-		String query = "SELECT * FROM team WHERE `status`='Pending'";
+		String query = "SELECT * FROM team WHERE `status`='Pending' ORDER BY `id`";
 		PreparedStatement ps;
 		ArrayList<Team> teams = new ArrayList<Team>();
 		try {
@@ -591,7 +607,7 @@ public class Database {
 	}
 
 	public ArrayList<Team> getAllApprovedTeams() {
-		String query = "SELECT * FROM team WHERE `status`='Approved'";
+		String query = "SELECT * FROM team WHERE `status`='Approved' ORDER BY `id`";
 		PreparedStatement ps;
 		ArrayList<Team> teams = new ArrayList<Team>();
 		try {
@@ -606,7 +622,7 @@ public class Database {
 	}
 
 	public ArrayList<Team> getAllDisabledTeams() {
-		String query = "SELECT * FROM team WHERE `status`='Disabled'";
+		String query = "SELECT * FROM team WHERE `status`='Disabled' ORDER BY `id`";
 		PreparedStatement ps;
 		ArrayList<Team> teams = new ArrayList<Team>();
 		try {

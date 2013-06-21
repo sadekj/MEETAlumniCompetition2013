@@ -20,29 +20,33 @@ import entities.User;
 @WebServlet("/GroupMemberList")
 public class GroupMemberList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public GroupMemberList() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public GroupMemberList() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		if (session.getAttribute("user") != null) {
 			try {
+				User creator = (User) session.getAttribute("user");
+				Group admin = Database.getInstance().getGroup(1);
 				String strgroupid = request.getParameter("id");
 				int groupid = Integer.parseInt(strgroupid);
 				response.getOutputStream().println("<table id='myTable' class='tablesorter' border=1>");
@@ -62,7 +66,9 @@ public class GroupMemberList extends HttpServlet {
 					response.getOutputStream().println("<td>" + user.getfName() + "</td>");
 					response.getOutputStream().println("<td>" + user.getlName() + "</td>");
 					response.getOutputStream().println("<td>" + user.getEmail() + "</td>");
-					response.getOutputStream().println("<td><button onclick='removeFromGroup("+groupid+"," + user.getId() + ")'>Remove</button></td>");
+					if (Database.getInstance().isInGroup(creator, admin)) {
+						response.getOutputStream().println("<td><button onclick='removeFromGroup(" + groupid + "," + user.getId() + ")'>Remove</button></td>");
+					}
 					response.getOutputStream().println("</tr>");
 				}
 				response.getOutputStream().println("</tbody>");

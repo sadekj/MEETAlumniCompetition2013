@@ -4,13 +4,26 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; UTF-8">
+<%@ include file="head.jsp" %>
 <script type="text/javascript" src="script/AJAXXMLFunction.js"></script>
 <title>Pending Users</title>
 </head>
 <body onload="loadListTeam('<%= request.getParameter("status")%>')">
+<%
+if (request.getParameter("header")!=null){
+%>
+	<%@ include file="header.jsp"%>
+	<% } %>
+	<div class="container">
 <div id="ContainerTeam"></div>
 <button onclick="loadListTeam('<%= request.getParameter("status")%>')">Refresh</button>
 <div id="Members"></div>
 <%@ include file="createteam.jsp" %>
+</div>
+<%
+if (request.getParameter("header")!=null){
+%>
+	<%@ include file="footer.jsp"%>
+	<% } %>
 </body>
 </html>

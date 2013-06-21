@@ -14,15 +14,17 @@
 	%>
 	<script type="text/javascript">
 		$(function(){
-			loadUsersNotInTeams(<%= id%>);
 			setTimeout("loadTeamMembers(<%= id%>)",100);
+			setTimeout("loadUsersNotInTeams(<%= id%>)",200);
 		});
 	</script>
 <title>Insert title here</title>
 </head>
 <body>
 <div id="Members"></div>
+<button onclick="loadTeamMembers(<%= id%>)">Refresh</button>
 <div id="teamActionsStatus"></div>
 <div id="UsersNotInTeams"></div>
+<button onclick="loadUsersNotInTeams(<%= id%>)">Refresh</button>
 </body>
 </html>

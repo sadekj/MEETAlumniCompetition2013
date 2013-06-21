@@ -72,9 +72,12 @@ public class AllTeams extends HttpServlet {
 				teams = Database.getInstance().getAllApprovedTeams();
 				function = "disableTeam";
 			}
+			boolean isInTeam = Database.getInstance().isInTeam(creator);
 			for (Team team : teams) {
 				response.getOutputStream().println("<tr>");
 				response.getOutputStream().println("<td><a href='#' onclick='loadTeamMembers(" + team.getId() + ")'>" + team.getName() + "</a></td>");
+				if(!isInTeam)
+					response.getOutputStream().println("<td><a href='JoinTeam?id="+team.getId()+"'>Join</a></td>");
 				if (allowed)
 					response.getOutputStream().println("<td><button onclick='" + function + "(" + team.getId() + ")'>" + function + "</button></td>");
 				response.getOutputStream().println("</tr>");

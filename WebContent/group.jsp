@@ -14,15 +14,17 @@
 	%>
 	<script type="text/javascript">
 		$(function(){
-			loadUsersNotInGroups(<%= id%>);
 			setTimeout("loadGroupMembers(<%= id%>)",100);
+			setTimeout("loadUsersNotInGroups(<%= id%>)",200);
 		});
 	</script>
-<title>Insert title here</title>
+<title><%= group.getName() %></title>
 </head>
 <body>
 <div id="Members"></div>
+<button onclick="loadGroupMembers(<%= id%>)">Refresh</button>
 <div id="groupActionsStatus"></div>
 <div id="UsersNotInGroup"></div>
+<button onclick="loadUsersNotInGroups(<%= id%>)">Refresh</button>
 </body>
 </html>
