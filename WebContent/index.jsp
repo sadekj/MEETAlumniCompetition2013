@@ -44,9 +44,28 @@
 	String msg = "";
 	int mId;
 	if (mCh) {
+		try{
 		mId = Integer.parseInt(request.getParameter("e"));
-		if (mId == 2) {
+		} catch(NumberFormatException e) {
+			e.printStackTrace();
+			mId = 666;
+		}
+		if (mId == 0) {
+			msg = "Thank you, your registration is awaiting approval. Check back later!";
+		} else if (mId == 1) {
+			msg = "Sign up failed.";
+		} else if (mId == 2) {
 			msg = "Login failed; entered username and/or password incorrect, or account hasn't been approved yet.";
+		} else if (mId == 3) {
+			msg = "Username and/or email already taken.";
+		} else if (mId == 4) {
+			msg = "Passwords don't match.";
+		} else if (mId == 5) {
+			msg = "Password must be 6-20 characters long.";
+		} else if (mId == 6) {
+			msg = "Sorry, Sign Up closed.";
+		} else if (mId == 666) {
+			msg = "Are you trying to crash this? Nice try, lol.";
 		}
 	}
 %>
