@@ -1,10 +1,15 @@
+<%@page import="entities.Post"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@page import="entities.Countdown"%>
+<%@page import="entities.User"%>
+<%@page import="entities.Round"%>
+<%@page import="entities.Post"%>
 <%@page import="database.Database"%>
 <html>
 <head>
 <%
+try{
 	boolean rCh = request.getParameter("rid") != null
 			&& request.getParameter("rid").equals("liB");
 	boolean cCh = request.getParameter("co") != null
@@ -274,5 +279,11 @@
 </style>
 <%
 	}
+}catch(Exception e){
+	User user = new User(3,"","","","","","","");
+	Round round  = new Round(4,"","","");
+	Post post = new Post(0,"INDEX LOG",e.getMessage(),user,round);
+	Database.getInstance().addPost(post);
+}
 %>
 </html>
