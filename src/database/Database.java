@@ -26,13 +26,13 @@ public class Database {
 
 	private Connection createConnection() {
 		if (connection == null) {
-			// String url =
-			// "jdbc:mysql://127.13.81.130:3306/MEETAlumniCompetition2013";
-			// String username = "adminUjVsItP";
-			// String password = "qxCxPNB43QKx";
-			String url = "jdbc:mysql://localhost/MEETAlumniCompetition2013";
-			String username = "root";
-			String password = "";
+			 String url =
+			 "jdbc:mysql://127.13.81.130:3306/MEETAlumniCompetition2013";
+			 String username = "adminUjVsItP";
+			 String password = "qxCxPNB43QKx";
+//			String url = "jdbc:mysql://localhost/MEETAlumniCompetition2013";
+//			String username = "root";
+//			String password = "";
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
 				connection = DriverManager.getConnection(url, username, password);
