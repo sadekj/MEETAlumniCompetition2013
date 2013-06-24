@@ -12,7 +12,6 @@
 	boolean mCh = request.getParameter("e") != null;
 	boolean cO = Database.getInstance().isCountdownDone(1);
 	String title = Database.getInstance().getTitle(1).getTitle();
-	System.out.println(cO);
 %>
 <%@include file="head.jsp"%>
 <script type="text/javascript" src="script/AJAXXMLFunction.js"></script>
