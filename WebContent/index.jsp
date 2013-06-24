@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@page import="entities.Countdown"%>
 <%@page import="database.Database"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <html>
 <head>
 <%
@@ -40,11 +42,12 @@
 <%
 	Countdown countdown = Database.getInstance().getCountdown(1);
 	if (countdown != null) {
+		
 %>
 <script type="text/javascript">
 	$(function() {
 		$('#count-down').county({
-			endDateTime : new Date("<%=countdown.getEndDate()%> <%=countdown.getEndTime()%>"),
+			endDateTime : new Date("<%=countdown.printEndDate()%> <%=countdown.getEndTime()%>"),
 							reflection : true,
 							animation : 'scroll',
 							theme : 'blue'
