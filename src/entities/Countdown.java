@@ -2,6 +2,8 @@ package entities;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class Countdown {
 	private int id;
@@ -60,6 +62,13 @@ public class Countdown {
 
 	public void setEndTime(Time endTime) {
 		this.endTime = endTime;
+	}
+	public String printEndDate() throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		java.util.Date d = sdf.parse(endDate.toString());
+		sdf.applyPattern("yyyy/MM/dd");
+		String newDateformat = sdf.format(d);
+		return newDateformat;
 	}
 
 	@Override
