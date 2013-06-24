@@ -1,23 +1,27 @@
-<%@page import="entities.Post"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@page import="entities.Countdown"%>
-<%@page import="entities.User"%>
-<%@page import="entities.Round"%>
-<%@page import="entities.Post"%>
 <%@page import="database.Database"%>
 <html>
 <head>
 <%
+boolean rCh = false;
+boolean cCh = false;
+boolean mCh = false;
+boolean cO = false;
+String title = "MEET";
 try{
-	boolean rCh = request.getParameter("rid") != null
+	rCh = request.getParameter("rid") != null
 			&& request.getParameter("rid").equals("liB");
-	boolean cCh = request.getParameter("co") != null
+	cCh = request.getParameter("co") != null
 			&& request.getParameter("co").equals("t");
-	boolean mCh = request.getParameter("e") != null;
-	boolean cO = Database.getInstance().isCountdownDone(1);
-	String title = Database.getInstance().getTitle(1).getTitle();
+	mCh = request.getParameter("e") != null;
+	cO = Database.getInstance().isCountdownDone(1);
+	title = Database.getInstance().getTitle(1).getTitle();
 	System.out.println(cO);
+}catch(Exception e){
+	%><script>consel.log(<%=e.getMessage() %>)</script><%
+}
 %>
 <%@include file="head.jsp"%>
 <script type="text/javascript" src="script/AJAXXMLFunction.js"></script>
@@ -279,11 +283,6 @@ try{
 </style>
 <%
 	}
-}catch(Exception e){
-	User user = new User(3,"","","","","","","");
-	Round round  = new Round(4,"","","");
-	Post post = new Post(0,"INDEX LOG",e.getMessage(),user,round);
-	Database.getInstance().addPost(post);
-}
+
 %>
 </html>
