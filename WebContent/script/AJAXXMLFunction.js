@@ -46,7 +46,7 @@ function updateScores() {
 	if (xhrequest.readyState == 4 && xhrequest.status == 200) {
 		var strResponse = xhrequest.responseText;
 		document.getElementById("allscores").innerHTML = strResponse;
-		setTimeout("updateChart()", 2000);
+		setTimeout("updateChart()", 500);
 	}
 }
 function updateChart() {
@@ -121,7 +121,7 @@ function approve(userid) {
 		xhrequest.open("POST", strURL, true);
 		xhrequest.send(null);
 	}
-	setTimeout("loadList('Pending')", 3000);
+	setTimeout("loadList('Pending')", 500);
 }
 function enable(userid) {
 	xhrequest = null;
@@ -135,7 +135,7 @@ function enable(userid) {
 		xhrequest.open("POST", strURL, true);
 		xhrequest.send(null);
 	}
-	setTimeout("loadList('Disabled')", 3000);
+	setTimeout("loadList('Disabled')", 500);
 }
 function disable(userid) {
 	xhrequest = null;
@@ -149,7 +149,7 @@ function disable(userid) {
 		xhrequest.open("POST", strURL, true);
 		xhrequest.send(null);
 	}
-	setTimeout("loadList('Approved')", 3000);
+	setTimeout("loadList('Approved')", 500);
 }
 
 function loadListTeam(status) {
@@ -184,7 +184,7 @@ function approveTeam(teamid) {
 		xhrequest.open("POST", strURL, true);
 		xhrequest.send(null);
 	}
-	setTimeout("loadListTeam('Pending')", 3000);
+	setTimeout("loadListTeam('Pending')", 500);
 }
 function enableTeam(teamid) {
 	xhrequest = null;
@@ -198,7 +198,7 @@ function enableTeam(teamid) {
 		xhrequest.open("POST", strURL, true);
 		xhrequest.send(null);
 	}
-	setTimeout("loadListTeam('Disabled')", 3000);
+	setTimeout("loadListTeam('Disabled')", 500);
 }
 function disableTeam(teamid) {
 	xhrequest = null;
@@ -212,7 +212,7 @@ function disableTeam(teamid) {
 		xhrequest.open("POST", strURL, true);
 		xhrequest.send(null);
 	}
-	setTimeout("loadListTeam('Approved')", 3000);
+	setTimeout("loadListTeam('Approved')", 500);
 }
 function loadTeamMembers(id) {
 	xhrequest = null;
@@ -383,7 +383,7 @@ function openRound(roundid) {
 		xhrequest.open("POST", strURL, true);
 		xhrequest.send(null);
 	}
-	setTimeout("location.reload()", 3000);
+	setTimeout("location.reload()", 500);
 }
 function closeRound(roundid) {
 	xhrequest = null;
@@ -397,7 +397,7 @@ function closeRound(roundid) {
 		xhrequest.open("POST", strURL, true);
 		xhrequest.send(null);
 	}
-	setTimeout("location.reload()", 3000);
+	setTimeout("location.reload()", 500);
 }
 function countdown(countdownid, page) {
 	xhrequest = null;

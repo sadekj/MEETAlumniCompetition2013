@@ -52,14 +52,8 @@ public class AllTeams extends HttpServlet {
 			if (allowed && request.getParameter("status") != null && !request.getParameter("status").equals("null")) {
 				status = request.getParameter("status");
 			}
-			response.getOutputStream().println("<table id='myTable' class='tablesorter' border=1>");
-			response.getOutputStream().println("<caption>All " + status + " Teams</caption>");
-			response.getOutputStream().println("<thead>");
-			response.getOutputStream().println("<tr>");
-			response.getOutputStream().println("<th scope='col'>Name</th>");
-			response.getOutputStream().println("</tr>");
-			response.getOutputStream().println("</thead>");
-			response.getOutputStream().println("<tbody>");
+			response.getOutputStream().println("<div id='allteams'>");
+			response.getOutputStream().println("<h3>All " + status + " Teams</h3>");
 			ArrayList<Team> teams;
 			String function;
 			if (status.equals("Pending") && allowed) {
@@ -74,16 +68,15 @@ public class AllTeams extends HttpServlet {
 			}
 			boolean isInTeam = Database.getInstance().isInTeam(creator);
 			for (Team team : teams) {
-				response.getOutputStream().println("<tr>");
-				response.getOutputStream().println("<td><a href='#' onclick='loadTeamMembers(" + team.getId() + ")'>" + team.getName() + "</a></td>");
+				response.getOutputStream().println("<div class='well'>");
+				response.getOutputStream().println("<a href='#' onclick='loadTeamMembers(" + team.getId() + ")'><h4>" + team.getName() + "</h4></a>");
 				if(!isInTeam)
-					response.getOutputStream().println("<td><a href='JoinTeam?id="+team.getId()+"'>Join</a></td>");
+					response.getOutputStream().println("<a href='JoinTeam?id="+team.getId()+"'>Join</a>");
 				if (allowed)
-					response.getOutputStream().println("<td><button onclick='" + function + "(" + team.getId() + ")'>" + function + "</button></td>");
-				response.getOutputStream().println("</tr>");
+					response.getOutputStream().println("<button onclick='" + function + "(" + team.getId() + ")'>" + function + "</button>");
+				response.getOutputStream().println("</div>");
 			}
-			response.getOutputStream().println("</tbody>");
-			response.getOutputStream().println("</table>");
+			response.getOutputStream().println("</div>");
 		} else {
 			response.getOutputStream().print("Not logged in");
 		}

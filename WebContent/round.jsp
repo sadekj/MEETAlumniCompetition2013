@@ -15,9 +15,9 @@
 <title>Round</title>
 <script type="text/javascript">
 	$(function() {
-		$("form").css("display", "none");
+		$("#createPostForm").css("display", "none");
 		$("#createPost").click(function() {
-			$("form").toggle("slow");
+			$("#createPostForm").toggle("slow");
 		});
 	});
 </script>
@@ -101,6 +101,7 @@
 					
 					if (allowed) {
 		%><a id="createPost" href="#">Create Post</a>
+		<div id="createPostForm" class="well">
 		<form action="CreatePost" method="POST">
 			<input type="hidden" name="roundid"
 				value="<%=request.getParameter("id")%>"> <input type="text"
@@ -108,6 +109,7 @@
 			<textarea id="richtext" rows="5" cols="5" name="description">Description</textarea>
 			<input type="submit" value="Create">
 		</form>
+		</div>
 		<%
 			}}else{
 				%><h1 class="alert alert-error">Round is Closed</h1><%

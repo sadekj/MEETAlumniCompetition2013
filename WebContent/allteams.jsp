@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; UTF-8">
 <%@ include file="head.jsp" %>
 <script type="text/javascript" src="script/AJAXXMLFunction.js"></script>
-<title>Pending Users</title>
+<title>Pending Teams</title>
 </head>
 <body onload="loadListTeam('<%= request.getParameter("status")%>')">
 <%
@@ -17,8 +17,8 @@ if (request.getParameter("header")!=null){
 	<div class="container">
 <div id="ContainerTeam"></div>
 <button onclick="loadListTeam('<%= request.getParameter("status")%>')">Refresh</button>
-<div id="Members"></div>
 <%@ include file="createteam.jsp" %>
+<div id="Members"></div>
 </div>
 <%
 if (request.getParameter("header")!=null){

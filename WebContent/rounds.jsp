@@ -19,6 +19,12 @@
 		});
 	});
 </script>
+<style>
+#createRoundForm input
+{
+	display: block;
+}
+</style>
 </head>
 <body>
 <%
@@ -42,6 +48,7 @@ if (request.getParameter("header")!=null){
 			<h1><a href="round.jsp?id=<%=round.getId()%>"><%=round.getTitle()%></a></h1>
 			<p><%= round.getDescription()%></p>
 			<%
+			if(allowed){
 				if (round.getStatus().equals("Closed")) {
 			%>
 			<button onclick="openRound(<%=round.getId()%>)">Open</button>
@@ -51,7 +58,6 @@ if (request.getParameter("header")!=null){
 			<button onclick="closeRound(<%=round.getId()%>)">Close</button>
 			<%
 				}
-			if(allowed){
 				%>
 				<a href="updateround.jsp?id=<%=round.getId()%>">Edit</a>
 				<%
@@ -62,11 +68,13 @@ if (request.getParameter("header")!=null){
 			}
 					if (allowed) {
 		%><a id="createRound" href="#">Create Round</a>
-		<form id="createRoundForm" action="CreateRound" method="POST">
+		<div id="createRoundForm" class="hero-unit">
+		<form action="CreateRound" method="POST">
 			<input type="text" name="title" placeholder="Title">
 			<textarea rows="5" cols="5" name="description">Description</textarea>
 			<input type="submit" value="Create">
 		</form>
+		</div>
 		<%
 			}
 				} catch (Exception e) {
