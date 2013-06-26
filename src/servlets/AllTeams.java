@@ -70,6 +70,7 @@ public class AllTeams extends HttpServlet {
 			for (Team team : teams) {
 				response.getOutputStream().println("<div class='well'>");
 				response.getOutputStream().println("<a href='#' onclick='loadTeamMembers(" + team.getId() + ")'><h4>" + team.getName() + "</h4></a>");
+				response.getOutputStream().println("<p>"+team.getDescription()+"</p>");
 				if(!isInTeam)
 					response.getOutputStream().println("<a href='JoinTeam?id="+team.getId()+"'>Join</a>");
 				if (allowed)

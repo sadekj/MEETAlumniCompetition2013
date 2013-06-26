@@ -38,7 +38,7 @@ if (request.getParameter("header")!=null){
 					Group admin = Database.getInstance().getGroup(1);
 					User user = (User) session.getAttribute("user");
 					if (Database.getInstance().isInGroup(user, admin)) {
-		%><a id="createGroup" href="#">Create Group</a>
+		%><a id="createGroup">Create Group</a>
 		<form id="createGroupForm" action="CreateGroup" method="POST">
 			<input type="text" name="name" placeholder="Name">
 			<textarea rows="5" cols="5" name="description">Description</textarea>

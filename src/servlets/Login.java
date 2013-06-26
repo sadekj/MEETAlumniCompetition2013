@@ -42,11 +42,14 @@ public class Login extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("pass");
 		User user = Database.getInstance().signIn(username, password);
-		if (user !=null){
+		if (user != null) {
 			HttpSession session = request.getSession();
-			session.setAttribute("user", user);	
-			response.sendRedirect("index.jsp");
-		}else{
+			session.setAttribute("user", user);
+			if (!Database.getInstance().isInTeam(user))
+				response.sendRedirect("allteams.jsp?header=t");
+			else
+				response.sendRedirect("index.jsp");
+		} else {
 			response.sendRedirect("index.jsp?e=2");
 		}
 	}

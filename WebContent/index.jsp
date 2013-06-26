@@ -23,9 +23,8 @@
 		mCh = request.getParameter("e") != null;
 		cO = Database.getInstance().isCountdownDone(1);
 		title = Database.getInstance().getTitle(1).getTitle();
-		System.out.println(cO);
 	} catch (Exception e) {
-%><script>consel.log(<%=e.getMessage()%>)</script>
+%><script>console.log(<%=e.getMessage()%>)</script>
 <%
 	}
 %>

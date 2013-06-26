@@ -67,11 +67,13 @@ if (request.getParameter("header")!=null){
 		<%
 			}
 					if (allowed) {
-		%><a id="createRound" href="#">Create Round</a>
+		%><a id="createRound">Create Round</a>
 		<div id="createRoundForm" class="hero-unit">
 		<form action="CreateRound" method="POST">
 			<input type="text" name="title" placeholder="Title">
 			<textarea rows="5" cols="5" name="description">Description</textarea>
+			<input type="text" name="enddate" placeholder="yyyy-mm-dd">
+			<input type="text" name="endtime" placeholder="hh:mm:ss">
 			<input type="submit" value="Create">
 		</form>
 		</div>

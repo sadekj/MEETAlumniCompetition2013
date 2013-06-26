@@ -1,3 +1,4 @@
+<%@page import="entities.Countdown"%>
 <%@page import="database.Database"%>
 <%@ page language="java" contentType="text/html; UTF-8"
 	pageEncoding="UTF-8"%>
@@ -20,12 +21,17 @@
 				int id = Integer.parseInt(request.getParameter("id"));
 				Round round = Database.getInstance().getRound(id);
 				if (round != null) {
+					Countdown countdown = Database.getInstance().getCountdown(round);
 	%>
 	<h1><%=round.getTitle() %></h1>
 	<form id="UpdateRound" action="UpdateRound" method="POST">
 		<input type="hidden" name="id" value="<%=round.getId()%>">
 		<input type="text" name="title" placeholder="Title" value="<%=round.getTitle() %>">
 		<textarea rows="5" cols="5" name="description"><%=round.getDescription() %></textarea>
+		<%if (countdown!=null){ %>
+		<input type="text" name="enddate" placeholder="yyyy-mm-dd" value="<%=countdown.getEndDate() %>">
+		<input type="text" name="endtime" placeholder="hh:mm:ss" value="<%=countdown.getEndTime() %>">
+		<%} %>
 		<input type="submit" value="Save">
 	</form>
 	<%

@@ -50,8 +50,9 @@ public class MemberList extends HttpServlet {
 				Group staff = Database.getInstance().getGroup(2);
 				String strteamid = request.getParameter("id");
 				int teamid = Integer.parseInt(strteamid);
-				response.getOutputStream().println("<table id='myTable' class='tablesorter' border=1>");
-				response.getOutputStream().println("<caption>Team Members</caption>");
+				Team team = Database.getInstance().getTeam(teamid);
+				response.getOutputStream().println("<table id='myTable' class='well' border=1>");
+				response.getOutputStream().println("<caption>"+team.getName()+"'s Members</caption>");
 				response.getOutputStream().println("<thead>");
 				response.getOutputStream().println("<tr>");
 				response.getOutputStream().println("<th scope='col'>First Name</th>");
@@ -60,7 +61,6 @@ public class MemberList extends HttpServlet {
 				response.getOutputStream().println("</tr>");
 				response.getOutputStream().println("</thead>");
 				response.getOutputStream().println("<tbody>");
-				Team team = Database.getInstance().getTeam(teamid);
 				ArrayList<User> users = Database.getInstance().getMembers(team);
 				for (User user : users) {
 					response.getOutputStream().println("<tr>");

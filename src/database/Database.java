@@ -26,10 +26,10 @@ public class Database {
 
 	private Connection createConnection() {
 		if (connection == null) {
-//			 String url =
-//			 "jdbc:mysql://127.13.81.130:3306/MEETAlumniCompetition2013";
-//			 String username = "adminUjVsItP";
-//			 String password = "qxCxPNB43QKx";
+			// String url =
+			// "jdbc:mysql://127.13.81.130:3306/MEETAlumniCompetition2013";
+			// String username = "adminUjVsItP";
+			// String password = "qxCxPNB43QKx";
 			String url = "jdbc:mysql://localhost/MEETAlumniCompetition2013";
 			String username = "root";
 			String password = "";
@@ -243,15 +243,37 @@ public class Database {
 		return group;
 	}
 
-	public boolean createRound(Round round) {
+	public boolean createRound(Round round, Countdown countdown) {
 		String query = "INSERT INTO `round`(`title`,`description`,`status`)VALUES(?,?,?)";
 		PreparedStatement ps;
+		ResultSet generatedKeys;
 		try {
-			ps = connection.prepareStatement(query);
+			connection.setAutoCommit(false);
+			ps = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 			ps.setString(1, round.getTitle());
 			ps.setString(2, round.getDescription());
 			ps.setString(3, round.getStatus());
 			ps.execute();
+			generatedKeys = ps.getGeneratedKeys();
+			if (generatedKeys.next())
+				round.setId(generatedKeys.getInt(1));
+			query = "INSERT INTO `countdowns` ( `name`, `description`, `enddate`, `endtime`) VALUES (?, ?, ?, ?)";
+			ps = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			ps.setString(1, countdown.getName());
+			ps.setString(2, countdown.getDescription());
+			ps.setDate(3, countdown.getEndDate());
+			ps.setTime(4, countdown.getEndTime());
+			ps.execute();
+			generatedKeys = ps.getGeneratedKeys();
+			if (generatedKeys.next())
+				countdown.setId(generatedKeys.getInt(1));
+			query = "INSERT INTO  `countdown_round` (`countdownid` ,`roundid`)VALUES (?, ?)";
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, countdown.getId());
+			ps.setInt(2, round.getId());
+			ps.execute();
+			connection.commit();
+			connection.setAutoCommit(true);
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -259,22 +281,33 @@ public class Database {
 		return false;
 	}
 
-	public boolean updateRound(Round round) {
+	public boolean updateRound(Round round, Countdown countdown) {
 		String query = "UPDATE `round` SET `title`=?, `description`=? WHERE `id`=?";
 		PreparedStatement ps;
 		try {
+			connection.setAutoCommit(false);
 			ps = connection.prepareStatement(query);
 			ps.setString(1, round.getTitle());
 			ps.setString(2, round.getDescription());
 			ps.setInt(3, round.getId());
 			ps.execute();
+			query = "UPDATE `countdowns` SET `name`=?, `description`=?, `enddate`=?, `endtime`=? WHERE `id`=?";
+			ps = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			ps.setString(1, countdown.getName());
+			ps.setString(2, countdown.getDescription());
+			ps.setString(3, countdown.getEndDate().toString());
+			ps.setString(4, countdown.getEndTime().toString());
+			ps.setInt(5, countdown.getId());
+			ps.execute();
+			connection.commit();
+			connection.setAutoCommit(true);
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return false;
 	}
-	
+
 	public boolean addUserToTeam(User user, Team team) {
 		String query = "INSERT INTO user_team(`userid`,`teamid`)VALUES(?,?)";
 		PreparedStatement ps;
@@ -401,7 +434,7 @@ public class Database {
 		}
 		return user;
 	}
-	
+
 	public Post getPost(int id) {
 		String query = "SELECT * FROM `post` WHERE `id`=?";
 		PreparedStatement ps;
@@ -418,7 +451,7 @@ public class Database {
 		}
 		return post;
 	}
-	
+
 	public boolean removePost(Post post) {
 		String query = "DELETE FROM `post` WHERE `id`= ?";
 		PreparedStatement ps;
@@ -532,7 +565,7 @@ public class Database {
 	}
 
 	public ArrayList<Round> getAllRounds() {
-		String query = "SELECT * FROM round";
+		String query = "SELECT * FROM round ORDER BY `id`";
 		PreparedStatement ps;
 		ArrayList<Round> rounds = new ArrayList<Round>();
 		try {
@@ -699,7 +732,6 @@ public class Database {
 		}
 		return countdown;
 	}
-	
 
 	public Countdown getCountdown(int id) {
 		String query = "SELECT * FROM countdowns WHERE id = ?";
@@ -716,6 +748,7 @@ public class Database {
 		}
 		return countdown;
 	}
+
 	public boolean isCountdownDone(int id) {
 		String query = "SELECT * FROM `countdowns` WHERE `id`=? AND (`enddate`>CURDATE() OR (`enddate` = CURDATE() AND `endtime`>NOW()))";
 		PreparedStatement ps;
@@ -869,7 +902,7 @@ public class Database {
 		Team team = Database.getInstance().getTeam(user);
 		System.out.print(team.getName());
 	}
-	
+
 	public Title getTitle(int id) {
 		String query = "SELECT * FROM titles WHERE `id`=?";
 		PreparedStatement ps;

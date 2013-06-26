@@ -1,6 +1,8 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import database.Database;
+import entities.Countdown;
 import entities.Group;
 import entities.Round;
 import entities.User;
@@ -50,8 +53,15 @@ public class CreateRound extends HttpServlet {
 				if (Database.getInstance().isInGroup(user, staff)) {
 					String title = request.getParameter("title");
 					String description = request.getParameter("description");
+					String strenddate = request.getParameter("enddate");
+					String endtime = request.getParameter("endtime");
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	                java.util.Date endDate = sdf.parse(strenddate);
+	                java.sql.Date endSqlDate = new Date(endDate.getTime());
+	                java.sql.Time endSqlTime = java.sql.Time.valueOf(endtime);
 					Round round = new Round(0, title, description, "Closed");
-					if (Database.getInstance().createRound(round))
+					Countdown countdown = new Countdown(0, round.getTitle(), "Countdown of "+round.getTitle()+", which is is about: "+round.getDescription(), endSqlDate, endSqlTime);
+					if (Database.getInstance().createRound(round,countdown))
 						response.sendRedirect("rounds.jsp?header=t");
 					else
 						response.getOutputStream().print("Error while creating the round!");

@@ -10,8 +10,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; UTF-8">
-<script type="text/javascript" src="script/AJAXXMLFunction.js"></script>
 <%@ include file="head.jsp"%>
+<script type="text/javascript" src="script/AJAXXMLFunction.js"></script>
+<link rel="stylesheet" type="text/css" href="county/css/county.css" />
+<script src="county/js/county.js" type="text/javascript"></script>
 <title>Round</title>
 <script type="text/javascript">
 	$(function() {
@@ -21,6 +23,15 @@
 		});
 	});
 </script>
+<style>
+#count-down {
+	background-color: rgba(77, 100, 255, 0.5);
+		margin-left: 25%;
+		position: fixed;
+		top: 10%;
+		right: 0%;
+}
+</style>
 <style type="text/css">
 #updateRemovePostStatus {
 	position: fixed;
@@ -76,13 +87,27 @@
 		int countdownid = 0;
 		if(countdown!=null)
 			countdownid=countdown.getId();
+		if (countdown != null) {
+			
+			%>
+			<script type="text/javascript">
+				$(function() {
+					$('#count-down').county({
+						endDateTime : new Date("<%=countdown.printEndDate()%> <%=countdown.getEndTime()%>"),
+										reflection : false,
+										animation : 'scroll',
+										theme : 'blue'
+									});
+
+				});
+			</script>
+			<%
+				}
 		if(!Database.getInstance().isCountdownDone(countdownid)){
 	%>
-	<script type="text/javascript">
-		document.location.href="countdown.jsp?id=1";
-		</script>
+			<div id="count-down"></div>
 	<%
-		}%>
+		%>
 		<%
 					ArrayList<Post> posts = Database.getInstance().getAllPosts(round);
 					for(Post post : posts){
@@ -111,7 +136,11 @@
 		</form>
 		</div>
 		<%
-			}}else{
+			}
+		}else{
+			%><h1>Countdown is Over!</h1><%
+		}
+				}else{
 				%><h1 class="alert alert-error">Round is Closed</h1><%
 			}
 				} catch (Exception e) {

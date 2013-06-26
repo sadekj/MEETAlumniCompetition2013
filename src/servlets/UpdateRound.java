@@ -1,6 +1,9 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import database.Database;
+import entities.Countdown;
 import entities.Group;
 import entities.Round;
 import entities.User;
@@ -49,11 +53,20 @@ public class UpdateRound extends HttpServlet {
 					int roundid = Integer.parseInt(strroundid);
 					String title = request.getParameter("title");
 					String description = request.getParameter("description");
-					Round round = new Round(roundid, title, description, "");
-					if (Database.getInstance().updateRound(round))
+					String strenddate = request.getParameter("enddate");
+					String endtime = request.getParameter("endtime");
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	                java.util.Date endDate = sdf.parse(strenddate);
+	                java.sql.Date endSqlDate = new Date(endDate.getTime());
+	                java.sql.Time endSqlTime = java.sql.Time.valueOf(endtime);
+					Round round = new Round(0, title, description, "Closed");
+					Round dbRound = Database.getInstance().getRound(roundid);
+					Countdown dbCountdown = Database.getInstance().getCountdown(dbRound);
+					Countdown countdown = new Countdown(dbCountdown.getId(), round.getTitle(), "Countdown of "+round.getTitle()+", which is is about: "+round.getDescription(), endSqlDate, endSqlTime);
+					if (Database.getInstance().updateRound(round,countdown))
 						response.sendRedirect("round.jsp?id="+roundid);
 					else
-						response.getOutputStream().print("Error while creating the round!");
+						response.getOutputStream().print("Error while saving the round!");
 				} else {
 					response.getOutputStream().print("you are not staff");
 				}

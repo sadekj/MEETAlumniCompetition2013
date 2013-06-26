@@ -12,6 +12,12 @@
 <title>Add Score</title>
 </head>
 <body>
+<%
+if (request.getParameter("header")!=null){
+%>
+	<%@ include file="header.jsp"%>
+	<div class="container">
+	<% } %>
 	<form action="" method="post">
 		<select id="team" name="team">
 			<%
@@ -36,5 +42,11 @@
 		<input type="button" onclick="addScore()" value="Add Score">
 	</form>
 		<div id="status"></div>
+		<%
+if (request.getParameter("header")!=null){
+%>
+	</div>
+	<%@ include file="header.jsp"%>
+	<% } %>
 </body>
 </html>

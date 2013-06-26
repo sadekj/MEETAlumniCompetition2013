@@ -47,8 +47,8 @@ public class AddScore extends HttpServlet {
 		HttpSession session = request.getSession();
 		if (session.getAttribute("user") != null) {
 			User creator = (User) session.getAttribute("user");
-			Group admin = Database.getInstance().getGroup(1);
-			if (Database.getInstance().isInGroup(creator, admin)) {
+			Group staff = Database.getInstance().getGroup(2);
+			if (Database.getInstance().isInGroup(creator, staff)) {
 				String strteamid = request.getParameter("team");
 				String strroundid = request.getParameter("round");
 				String strvalue = request.getParameter("value");
